@@ -9,8 +9,16 @@ public class Hostage : NPC
     private int turnsLeft;
     public int maxTurnsLeft = 8;
 
+    private int savedOnTurn = -1;
+
+    [HideInInspector]
     public bool isDead = false;
+    [HideInInspector]
     public bool isSaved = false;
+
+    // Once all the enemies in the list are dead the hostage is rescued
+    [SerializeField]
+    private List<Enemy> enemies = new List<Enemy>();
 
     // Sprites
     private Sprite aliveSprite;
@@ -50,13 +58,20 @@ public class Hostage : NPC
     /// </summary>
     public override void MoveNPC()
     {
-        if (--turnsLeft == -1) KillHostage();
+        if (!isSaved) IsHostageSaved();
+        if (--turnsLeft == -1 && !isSaved) KillHostage();
         UpdateTurnsLeftGUI(turnsLeft);
     }
 
 
     public void UpdateTurnsLeftGUI(int turn)
     {
+        if (isSaved)
+        {
+            textMesh.text = "Saved!";
+            outline.text = "Saved!";
+            return;
+        }
         if (turn >= 0)
         {
             var sTurn = turn.ToString();
@@ -82,6 +97,20 @@ public class Hostage : NPC
         turnsLeft = maxTurnsLeft - turn;
         UpdateTurnsLeftGUI(turnsLeft);
 
+        print("turn " + turn);
+
+        if (isSaved)
+        {
+            if (savedOnTurn == turn) UnSaveHostage();
+            return;
+        }
+        else if (savedOnTurn == turn)
+        {
+            SaveHostage();
+            //UpdateTurnsLeftGUI(turnsLeft);
+            return;
+        }
+
         if (turnsLeft == -1) KillHostage();
         else if (turnsLeft == 0) ResurrectHostage();
     }
@@ -90,14 +119,40 @@ public class Hostage : NPC
     public void ResetTurn(int turn)
     {
         turnsLeft = maxTurnsLeft - turn;
-        if (turnsLeft == 0) KillHostage();
+        if (turnsLeft == -1 && !isSaved) KillHostage();
+    }
+
+
+    public void IsHostageSaved()
+    {
+        if (enemies.TrueForAll(e => e.alive)) return;
+        SaveHostage();
     }
 
 
     public void SaveHostage()
     {
+        print("saved");
         isSaved = true;
         isDead = false;
+        savedOnTurn = GameManager.instance.turns;
+        UpdateTurnsLeftGUI(savedOnTurn);
+        print("savedOnTurn: " + savedOnTurn);
+    }
+
+
+    public void UnSaveHostage()
+    {
+        isSaved = false;
+    }
+
+
+    public void EraseSave()
+    {
+        isSaved = true;
+        isDead = false;
+        savedOnTurn = -1;
+        UpdateTurnsLeftGUI(GameManager.instance.turns);
     }
 
 

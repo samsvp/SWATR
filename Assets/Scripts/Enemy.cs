@@ -25,6 +25,8 @@ public class Enemy : NPC
 
     public override void MoveNPC()
     {
+        print("nextMovementIndex: " + nextMovementIndex);
+        print("movement count: " + movement.Count);
         Vector2 currentMovent = movement[nextMovementIndex];
         Move((int)currentMovent.x, (int)currentMovent.y);
         pastMovementIndexes.Add(nextMovementIndex);
@@ -41,7 +43,8 @@ public class Enemy : NPC
     {
         transform.position = pastMovements[turn];
         transform.localEulerAngles = pastOrientations[turn];
-        nextMovementIndex = pastMovementIndexes[turn];
+        if (turn != GameManager.instance.turns) nextMovementIndex = pastMovementIndexes[turn];
+        else if (turn != 0) nextMovementIndex = pastMovementIndexes[turn-1];
     }
 
 

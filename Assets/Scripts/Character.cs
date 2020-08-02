@@ -21,11 +21,15 @@ public class Character : MonoBehaviour
     // Movement memory
     protected List<Vector2> pastMovements = new List<Vector2>();
     protected List<Vector3> pastOrientations = new List<Vector3>();
+
     // Movement rotation
     protected static Vector3 left = new Vector3(0, 0, 90);
     protected static Vector3 right = new Vector3(0, 0, -90);
     protected static Vector3 up = new Vector3(0, 0, 0);
     protected static Vector3 down = new Vector3(0, 0, 180);
+
+    // Health
+    public bool alive = true;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -107,5 +111,13 @@ public class Character : MonoBehaviour
     public virtual void Shoot()
     {
         Debug.Log("Pew pew");
+    }
+
+
+    public virtual void TakeDamage()
+    {
+        // Disable colliders (remember to reactivate it if it comes back to live
+        // through a rewind)
+        alive = false;
     }
 }
