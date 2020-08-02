@@ -1,0 +1,367 @@
+fileFormatVersion: 2
+guid: 7ab3d8a814898de4ab99dd09a432f93f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3148136855336585404
+    second: Hostages_0
+  - first:
+      213: 4681772692790425615
+    second: Hostages_1
+  - first:
+      213: 3534392359438379292
+    second: Hostages_2
+  - first:
+      213: 7034353877933311702
+    second: Hostages_3
+  - first:
+      213: 1795801026309287497
+    second: Hostages_4
+  - first:
+      213: 4139316623502106688
+    second: Hostages_5
+  - first:
+      213: 3047417950452242759
+    second: Hostages_6
+  - first:
+      213: 8995221686095879057
+    second: Hostages_7
+  - first:
+      213: -1989925371311360764
+    second: Hostages_8
+  - first:
+      213: -2838628504070568211
+    second: Hostages_9
+  - first:
+      213: 6962161868603439073
+    second: Hostages_10
+  - first:
+      213: 59720016282208612
+    second: Hostages_11
+  - first:
+      213: 6828846587897972824
+    second: Hostages_12
+  - first:
+      213: -1373043934329118319
+    second: Hostages_13
+  - first:
+      213: 6811062759098880121
+    second: Hostages_14
+  - first:
+      213: 1040005635600384700
+    second: Hostages_15
+  - first:
+      213: -7751915298277658421
+    second: Hostages_16
+  - first:
+      213: -3529562665454821699
+    second: Hostages_17
+  - first:
+      213: -5234525989788627472
+    second: Hostages_18
+  - first:
+      213: 8686442802645990733
+    second: Hostages_19
+  - first:
+      213: -940960964626936004
+    second: Hostages_20
+  - first:
+      213: 7275035539449683686
+    second: Hostages_21
+  - first:
+      213: 2953059242256139459
+    second: Hostages_22
+  - first:
+      213: 5689625011582617283
+    second: Hostages_23
+  - first:
+      213: -8246275947985661718
+    second: Hostages_24
+  - first:
+      213: 7631537262580300800
+    second: Hostages_25
+  - first:
+      213: -8626183692273910746
+    second: Hostages_26
+  - first:
+      213: 2895562776601789892
+    second: Hostages_27
+  - first:
+      213: -3193063320390876512
+    second: Hostages_28
+  - first:
+      213: 2983337630612118014
+    second: Hostages_29
+  - first:
+      213: -2942292221871049548
+    second: Hostages_30
+  - first:
+      213: -5999741828053597470
+    second: Hostages_31
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Hostages_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb807a65acd60bb20800000000000000
+      internalID: 3148136855336585404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hostages_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f08b5e0857ff8f040800000000000000
+      internalID: 4681772692790425615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hostages_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c19ed29ff1fac0130800000000000000
+      internalID: 3534392359438379292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hostages_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d64b96159b0f9160800000000000000
+      internalID: 7034353877933311702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hostages_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94e6274d487fbe810800000000000000
+      internalID: 1795801026309287497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hostages_5
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04066bcb98ec17930800000000000000
+      internalID: 4139316623502106688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hostages_6
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 749dad2ea7a9a4a20800000000000000
+      internalID: 3047417950452242759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hostages_7
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19b92abf67275dc70800000000000000
+      internalID: 8995221686095879057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

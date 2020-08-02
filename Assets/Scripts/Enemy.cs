@@ -49,7 +49,8 @@ public class Enemy : NPC
     {
         base.EraseTurns(turn);
         pastMovementIndexes.RemoveRange(turn, pastMovementIndexes.Count - turn);
-        nextMovementIndex = pastMovementIndexes[turn - 1] + 1;
+        if (turn > 0) nextMovementIndex = pastMovementIndexes[turn - 1] + 1;
+        else nextMovementIndex = 0;
     }
 
 
