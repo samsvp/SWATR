@@ -29,6 +29,7 @@ public class Character : MonoBehaviour
     protected static Vector3 down = new Vector3(0, 0, 180);
 
     // Health
+    // [HideInInspector]
     public bool alive = true;
 
     // Start is called before the first frame update

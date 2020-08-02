@@ -2128,13 +2128,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveTime: 0.03
   moving: 0
-  alive: 0
+  alive: 1
   maxTurnsLeft: 8
   isDead: 0
   isSaved: 0
   enemies:
   - {fileID: 1193430402}
   deadSprite: {fileID: 2251909136765983555, guid: f8ebaf64902f784429fb268fec160722,
+    type: 3}
+  savedSprite: {fileID: -1708035644841458694, guid: 634a2e1bdef7d434480f9d8a5121f8b7,
     type: 3}
 --- !u!1 &1359360884
 GameObject:

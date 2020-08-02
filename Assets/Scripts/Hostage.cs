@@ -21,9 +21,11 @@ public class Hostage : NPC
     private List<Enemy> enemies = new List<Enemy>();
 
     // Sprites
-    private Sprite aliveSprite;
+    private Sprite captiveSprite;
     [SerializeField]
     private Sprite deadSprite;
+    [SerializeField]
+    private Sprite savedSprite;
 
     // Text variables
     private TextMesh textMesh;
@@ -37,7 +39,7 @@ public class Hostage : NPC
         moving = true;
         turnsLeft = maxTurnsLeft;
 
-        aliveSprite = render.sprite;
+        captiveSprite = render.sprite;
 
         textMesh = transform.GetChild(0).GetChild(0).GetComponent<TextMesh>();
         outline = transform.GetChild(0).GetComponent<TextMesh>();
@@ -68,6 +70,7 @@ public class Hostage : NPC
     {
         if (isSaved)
         {
+            render.sprite = savedSprite;
             textMesh.text = "Saved!";
             outline.text = "Saved!";
             return;
@@ -98,16 +101,15 @@ public class Hostage : NPC
         UpdateTurnsLeftGUI(turnsLeft);
 
         print("turn " + turn);
-
+        print("savedOnTurn " + savedOnTurn);
         if (isSaved)
         {
-            if (savedOnTurn == turn) UnSaveHostage();
+            if (savedOnTurn >= turn) UnSaveHostage();
             return;
         }
         else if (savedOnTurn == turn)
         {
             SaveHostage();
-            //UpdateTurnsLeftGUI(turnsLeft);
             return;
         }
 
@@ -143,13 +145,16 @@ public class Hostage : NPC
 
     public void UnSaveHostage()
     {
+        render.sprite = captiveSprite;
         isSaved = false;
+        EraseTurns(GameManager.instance.turns);
     }
 
 
     public void EraseSave()
     {
-        isSaved = true;
+        render.sprite = captiveSprite;
+        isSaved = false;
         isDead = false;
         savedOnTurn = -1;
         UpdateTurnsLeftGUI(GameManager.instance.turns);
@@ -158,7 +163,7 @@ public class Hostage : NPC
 
     public void ResurrectHostage()
     {
-        render.sprite = aliveSprite;
+        render.sprite = captiveSprite;
         isDead = false;
         isSaved = false;
     }
