@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class NPC : Character
 {
-
+    
     private Transform target;
 
     // Use this for initialization
@@ -13,7 +13,9 @@ public abstract class NPC : Character
         GameManager.instance.AddNPCToList(this); // Add this enemy to the list of enemies
         base.Start();
     }
-    
+
+
+    public abstract void ChooseAction();
 
     public abstract void MoveNPC();
 

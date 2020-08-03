@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
         else if (playersTurn)
             Player.instance.GetInput();
         else
-            StartCoroutine(MoveNPCs());
+            StartCoroutine(ChooseNPCsAction());
     }
 
     // Called by each new NPC and familiar created
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    IEnumerator MoveNPCs()
+    private IEnumerator ChooseNPCsAction()
     {
         turnsText.text = (++turns).ToString();
 
@@ -83,11 +83,11 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < NPCs.Count; i++)
         {
-            NPCs[i].MoveNPC();
+            NPCs[i].ChooseAction();
         }
 
         yield return null;
-        yield return new WaitWhile(() => NPCs.All((npc) => npc.moving));
+        yield return new WaitWhile(() => NPCs.All((npc) => npc.isPerformingAction));
         
         NPCsMoving = false;
         playersTurn = true;
@@ -95,18 +95,6 @@ public class GameManager : MonoBehaviour
         wait = true;
         yield return null;
         wait = false;
-    }
-
-
-    /// <summary>
-    /// Shoots the player
-    /// </summary>
-    public void Shoot()
-    {
-        for (int i = 0; i < NPCs.Count; i++)
-        {
-            if (NPCs[i] is Enemy) NPCs[i].Shoot();
-        }
     }
 
 

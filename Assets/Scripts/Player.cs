@@ -33,8 +33,6 @@ public class Player : Character
     {
         if (instance == null) instance = this;
         else if (instance != this) Destroy(gameObject);
-
-        DontDestroyOnLoad(gameObject);
     }
 
     // Use this for initialization
@@ -55,9 +53,9 @@ public class Player : Character
 
     public void GetInput()
     {
-
+        if (!alive) return;
         // Check if it's the players turn. If it's not then nothing will run
-        if (!GameManager.instance.playersTurn || moving) return;
+        if (!GameManager.instance.playersTurn || isPerformingAction) return;
 
         // Store directionm which we will be moving
         x = 0;
@@ -144,6 +142,33 @@ public class Player : Character
         // Set playersTurn as false so that the enemies can move
         GameManager.instance.playersTurn = false;
     }
-    
 
+
+    public override void Shoot()
+    {
+        bc2D.enabled = false;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up);
+        bc2D.enabled = true;
+
+        base.Shoot();
+
+        pastMovements.Add(transform.position);
+        pastOrientations.Add(transform.localEulerAngles);
+
+        if (hit.transform == null) return;
+        if (hit.transform.CompareTag("Enemy")) hit.transform.SendMessage("TakeDamage");
+    }
+
+    protected override IEnumerator CShoot()
+    {
+        yield return StartCoroutine(base.CShoot());
+        GameManager.instance.playersTurn = false;
+    }
+
+    protected override IEnumerator CTakeDamage()
+    {
+        yield return StartCoroutine(base.CTakeDamage());
+        //ReloadScene.Reload();
+    }
+    
 }

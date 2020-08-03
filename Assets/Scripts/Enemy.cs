@@ -23,10 +23,36 @@ public class Enemy : NPC
     }
 
 
+    public override void ChooseAction()
+    {
+        if (!render.isVisible || !alive)
+        {
+            MoveNPC();
+            return;
+        }
+
+        RaycastHit2D hit = RShoot();
+
+        if (hit.transform == null) MoveNPC();
+        else if (hit.transform.CompareTag("Player"))
+        {
+            hit.transform.SendMessage("TakeDamage");
+            Shoot();
+        }
+        else MoveNPC();
+    }
+
+
     public override void MoveNPC()
     {
-        print("nextMovementIndex: " + nextMovementIndex);
-        print("movement count: " + movement.Count);
+        if (!alive)
+        {
+            pastMovements.Add(transform.position);
+            pastOrientations.Add(transform.localEulerAngles);
+            pastMovementIndexes.Add(nextMovementIndex);
+            return;
+        }
+
         Vector2 currentMovent = movement[nextMovementIndex];
         Move((int)currentMovent.x, (int)currentMovent.y);
         pastMovementIndexes.Add(nextMovementIndex);
@@ -58,16 +84,16 @@ public class Enemy : NPC
 
 
     /// <summary>
-    /// Shoots the player
+    /// Checks if there is someting to shoot.
     /// </summary>
-    public override void Shoot()
+    /// <returns></returns>
+    private RaycastHit2D RShoot()
     {
-        if (!render.isVisible) return; // return if offscreen
         bc2D.enabled = false;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up);
         bc2D.enabled = true;
 
-        if (hit.transform == null) return;
-        if (hit.transform.CompareTag("Player")) base.Shoot();
+        return hit;
     }
+
 }

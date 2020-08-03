@@ -36,7 +36,7 @@ public class Hostage : NPC
     protected override void Start()
     {
         base.Start();
-        moving = true;
+        isPerformingAction = true;
         turnsLeft = maxTurnsLeft;
 
         captiveSprite = render.sprite;
@@ -51,6 +51,12 @@ public class Hostage : NPC
     protected override void Update()
     {
         
+    }
+
+
+    public override void ChooseAction()
+    {
+        MoveNPC();
     }
 
 

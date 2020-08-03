@@ -6,8 +6,9 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     public float moveTime = 0.03f;
+    // Actions
     [HideInInspector]
-    public bool moving;
+    public bool isPerformingAction;
     
     protected BoxCollider2D bc2D;
     protected Rigidbody2D rb2D;
@@ -56,6 +57,13 @@ public class Character : MonoBehaviour
 
     protected virtual void Move(int xDir, int yDir)
     {
+        if (!alive)
+        {
+            pastMovements.Add(transform.position);
+            pastOrientations.Add(transform.localEulerAngles);
+            return;
+        }
+
         Vector2 start = transform.position;
         Vector2 end = start + 2 * new Vector2(xDir, yDir);
 
@@ -80,7 +88,7 @@ public class Character : MonoBehaviour
 
     protected IEnumerator SmoothMovement(Vector3 end)
     {
-        moving = true;
+        isPerformingAction = true;
 
         Vector3 target = new Vector3((int)end.x, (int)end.y);
         float sqrRemainingDistance = (transform.position - target).sqrMagnitude;
@@ -95,10 +103,8 @@ public class Character : MonoBehaviour
         }
 
         transform.position = target;
-        // Shoot when the player finishes moving
-        if (this is Player) GameManager.instance.Shoot();
 
-        moving = false;
+        isPerformingAction = false;
     }
 
 
@@ -111,7 +117,24 @@ public class Character : MonoBehaviour
 
     public virtual void Shoot()
     {
-        Debug.Log("Pew pew");
+        if (!alive) return;
+
+        isPerformingAction = true;
+        print("shooting");
+        StartCoroutine(CShoot());
+    }
+
+
+    protected virtual IEnumerator CShoot()
+    {
+        animator.enabled = true;
+        animator.SetBool("Shoot", true);
+        yield return null;
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f);
+        animator.SetBool("Shoot", false);
+        yield return null;
+        animator.enabled = false;
+        isPerformingAction = false;
     }
 
 
@@ -119,6 +142,20 @@ public class Character : MonoBehaviour
     {
         // Disable colliders (remember to reactivate it if it comes back to live
         // through a rewind)
+        bc2D.enabled = false;
+
         alive = false;
+        StartCoroutine(CTakeDamage());
+    }
+
+
+    protected virtual IEnumerator CTakeDamage()
+    {
+        animator.enabled = true;
+        animator.SetBool("Death", true);
+        yield return null;
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f);
+        yield return null;
+        animator.enabled = false;
     }
 }
