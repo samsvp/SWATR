@@ -104,7 +104,7 @@ public class Hostage : NPC
         print("savedOnTurn " + savedOnTurn);
         if (isSaved)
         {
-            if (savedOnTurn >= turn) UnSaveHostage();
+            if (savedOnTurn > turn) UnSaveHostage();
             return;
         }
         else if (savedOnTurn == turn)
