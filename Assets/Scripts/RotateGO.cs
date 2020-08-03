@@ -9,11 +9,17 @@ public class RotateGO : MonoBehaviour
 {
 
     [SerializeField]
-    private int maxAngle = 10;
+    private float relativeMaxAngle = 10;
+    [SerializeField]
+    private float step = 0.025f;
+    private float localMaxAngle;
+    private float z;
 
     // Use this for initialization
     void Start()
     {
+        z = transform.localEulerAngles.z;
+        localMaxAngle = relativeMaxAngle + z;
         StartCoroutine(Rotate());
     }
 
@@ -21,22 +27,22 @@ public class RotateGO : MonoBehaviour
     {
         while (true)
         {
-            float step = 0.025f;
-            for (float i = 0; i <= maxAngle; i += step)
+            for (float i = z; i <= localMaxAngle; i += step)
             {
                 transform.localEulerAngles = new Vector3(0, 0, i);
                 yield return new WaitForEndOfFrame();
             }
-            for (float i = maxAngle; i >= -maxAngle; i -= step)
+            for (float i = localMaxAngle; i >= (z - relativeMaxAngle); i -= step)
             {
                 transform.localEulerAngles = new Vector3(0, 0, i);
                 yield return new WaitForEndOfFrame();
             }
-            for (float i = -maxAngle; i < 0; i += step)
+            for (float i = (z - relativeMaxAngle); i < z; i += step)
             {
                 transform.localEulerAngles = new Vector3(0, 0, i);
                 yield return new WaitForEndOfFrame();
             }
+
             yield return new WaitForFixedUpdate();
         }
     }

@@ -17,9 +17,17 @@ public class Player : Character
 
     // Rewind logic
     public int rewindTurns = 5;
+    [HideInInspector]
     public int rewindsLeft = 5;
+    // How many turns the player can rewind back to
+    public int rewindLimit = 5;
+    private int rewindBeginTurn = -1; // The turn the player initiated the rewind
     [SerializeField]
     private Text rewindsLeftText;
+
+    // Items logic
+    [SerializeField]
+    private int gunAmmo = 5;
 
     // Turn button
     public GameObject turnButton;
@@ -100,6 +108,7 @@ public class Player : Character
         }
 
         if (--rewindsLeft < 0) return;
+        rewindBeginTurn = GameManager.instance.turns;
         RewindsLeft();
         turnButton.SetActive(true);
         RefreshArrows(Int32.Parse(turnButtonText.text));
@@ -112,6 +121,11 @@ public class Player : Character
     {
         int turn = Int32.Parse(turnButtonText.text);
         int nextTurn = turn + i;
+
+        print("rewindBeginTurn: " + rewindBeginTurn);
+        print("nextTurn: " + nextTurn);
+        print("Difference: " + (rewindBeginTurn - nextTurn));
+        print("");
         
         if (nextTurn >= pastMovements.Count)
         {
@@ -120,7 +134,7 @@ public class Player : Character
         }
         else downButtonImage.sprite = buttonEnabled;
 
-        if (nextTurn < 0)
+        if (nextTurn < 0 || rewindBeginTurn - nextTurn > rewindLimit)
         {
             downButtonImage.sprite = buttonDisabled;
             return;
@@ -142,11 +156,12 @@ public class Player : Character
 
     private void RefreshArrows(int turn)
     {
-        if (turn <= 0) downButtonImage.sprite = buttonDisabled;
+        if (turn <= 0 || rewindBeginTurn - turn == rewindLimit) downButtonImage.sprite = buttonDisabled;
         else downButtonImage.sprite = buttonEnabled;
 
         if (turn >= pastMovements.Count - 1) upButtonImage.sprite = buttonDisabled;
         else upButtonImage.sprite = buttonEnabled;
+        
     }
 
 
@@ -161,6 +176,8 @@ public class Player : Character
 
     public override void Shoot()
     {
+        if (gunAmmo-- == 0) return;
+
         bc2D.enabled = false;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up);
         bc2D.enabled = true;
