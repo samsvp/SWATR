@@ -30,6 +30,10 @@ public class Player : Character
     private int gunAmmo = 5;
     [SerializeField]
     private Text gunAmmoText;
+    [SerializeField]
+    private int tazerAmmo = 5;
+    [SerializeField]
+    private Text tazerAmmoText;
 
     // Turn button
     public GameObject turnButton;
@@ -58,6 +62,9 @@ public class Player : Character
         turnButtonText = turnButton.transform.GetChild(0).GetComponent<Text>();
         upButtonImage = upButton.GetComponent<Image>();
         downButtonImage = downButton.GetComponent<Image>();
+
+        gunAmmoText.text = gunAmmo.ToString();
+        tazerAmmoText.text = tazerAmmo.ToString();
     }
 
     // Update is called once per frame
