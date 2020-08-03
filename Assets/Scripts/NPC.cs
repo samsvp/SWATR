@@ -4,8 +4,9 @@ using UnityEngine;
 
 public abstract class NPC : Character
 {
-    
     private Transform target;
+
+    protected List<bool> aliveTurns = new List<bool>() { true };
 
     // Use this for initialization
     protected override void Start()

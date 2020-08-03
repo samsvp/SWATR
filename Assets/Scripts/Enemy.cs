@@ -25,6 +25,8 @@ public class Enemy : NPC
 
     public override void ChooseAction()
     {
+        aliveTurns.Add(alive);
+
         if (!render.isVisible || !alive)
         {
             MoveNPC();
@@ -69,17 +71,33 @@ public class Enemy : NPC
     {
         transform.position = pastMovements[turn];
         transform.localEulerAngles = pastOrientations[turn];
+
+        // Movement
         if (turn != GameManager.instance.turns) nextMovementIndex = pastMovementIndexes[turn];
         else if (turn != 0) nextMovementIndex = pastMovementIndexes[turn-1];
+
+        // Check if enemy is alive
+        if (!alive && aliveTurns[turn]) Resurrect();
+        else if (alive && !aliveTurns[turn]) TakeDamage();
+        
     }
 
 
     public override void EraseTurns(int turn)
     {
         base.EraseTurns(turn);
+        aliveTurns.RemoveRange(turn + 1, aliveTurns.Count - turn - 1);
         pastMovementIndexes.RemoveRange(turn, pastMovementIndexes.Count - turn);
         if (turn > 0) nextMovementIndex = pastMovementIndexes[turn - 1] + 1;
         else nextMovementIndex = 0;
+    }
+
+
+    public void Resurrect()
+    {
+        animator.enabled = true;
+        animator.SetBool("Death", false);
+        alive = true;
     }
 
 

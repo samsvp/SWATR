@@ -36,6 +36,7 @@ public class Hostage : NPC
     protected override void Start()
     {
         base.Start();
+
         isPerformingAction = true;
         turnsLeft = maxTurnsLeft;
 
