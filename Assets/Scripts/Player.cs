@@ -28,6 +28,8 @@ public class Player : Character
     // Items logic
     [SerializeField]
     private int gunAmmo = 5;
+    [SerializeField]
+    private Text gunAmmoText;
 
     // Turn button
     public GameObject turnButton;
@@ -176,7 +178,9 @@ public class Player : Character
 
     public override void Shoot()
     {
+        if (gunAmmo < 0) return; // Avoid negative numbers
         if (gunAmmo-- == 0) return;
+        gunAmmoText.text = gunAmmo.ToString();
 
         bc2D.enabled = false;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up);
