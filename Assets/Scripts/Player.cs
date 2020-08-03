@@ -47,7 +47,7 @@ public class Player : Character
     // Update is called once per frame
     protected override void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.R)) ReloadScene.Reload();
     }
 
 
@@ -168,7 +168,12 @@ public class Player : Character
     protected override IEnumerator CTakeDamage()
     {
         yield return StartCoroutine(base.CTakeDamage());
-        //ReloadScene.Reload();
+
+        while (true)
+        {
+            if (Input.GetKeyDown(KeyCode.R)) ReloadScene.Reload();
+            yield return null;
+        }
     }
     
 }
