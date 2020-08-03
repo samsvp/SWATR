@@ -31,9 +31,9 @@ public class Player : Character
     [SerializeField]
     private Text gunAmmoText;
     [SerializeField]
-    private int tazerAmmo = 5;
+    private int taserAmmo = 5;
     [SerializeField]
-    private Text tazerAmmoText;
+    private Text taserAmmoText;
 
     // Turn button
     public GameObject turnButton;
@@ -48,6 +48,22 @@ public class Player : Character
     private Image upButtonImage;
     [SerializeField]
     private Sprite buttonDisabled;
+
+    // Sprite Logic
+    [SerializeField]
+    private Sprite gunSprite;
+    [SerializeField]
+    private Sprite taserSprite;
+
+    // Weapon Logic
+    public enum Weapon
+    {
+        gun,
+        taser,
+        granade
+    };
+
+    private Weapon weapon = Weapon.gun;
 
     void Awake()
     {
@@ -64,7 +80,7 @@ public class Player : Character
         downButtonImage = downButton.GetComponent<Image>();
 
         gunAmmoText.text = gunAmmo.ToString();
-        tazerAmmoText.text = tazerAmmo.ToString();
+        taserAmmoText.text = taserAmmo.ToString();
     }
 
     // Update is called once per frame
@@ -80,6 +96,8 @@ public class Player : Character
         // Check if it's the players turn. If it's not then nothing will run
         if (!GameManager.instance.playersTurn || isPerformingAction) return;
 
+        ChangeWeapon();
+
         // Store directionm which we will be moving
         x = 0;
         y = 0;
@@ -94,7 +112,22 @@ public class Player : Character
         // Pass the horizontal and vertical direction that the player is moving. The <Wall> parameter means that
         // the player might interact with a wall when moving
         if (x != 0 || y != 0) Move(x, y);
-        else if (Input.GetMouseButtonDown(0)) Shoot();
+        else if (Input.GetMouseButtonDown(0))
+        {
+            switch (weapon)
+            {
+                case Weapon.gun:
+                    ShootGun();
+                    break;
+                case Weapon.taser:
+                    ShootTaser();
+                    break;
+                case Weapon.granade:
+                    break;
+                default:
+                    break;
+            }
+        }
         else if (Input.GetMouseButtonDown(1)) Rewind();
         else
         {
@@ -104,6 +137,27 @@ public class Player : Character
     }
 
 
+    public void ChangeWeapon()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            weapon = Weapon.gun;
+            sprite = gunSprite;
+            animator.SetBool("Taser", false);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            weapon = Weapon.taser;
+            sprite = taserSprite;
+            animator.SetBool("Taser", true);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            animator.SetBool("Taser", false);
+        }
+    }
+
+    #region rewind
     public void Rewind()
     {
         if (GameManager.instance.Wait)
@@ -130,11 +184,6 @@ public class Player : Character
     {
         int turn = Int32.Parse(turnButtonText.text);
         int nextTurn = turn + i;
-
-        print("rewindBeginTurn: " + rewindBeginTurn);
-        print("nextTurn: " + nextTurn);
-        print("Difference: " + (rewindBeginTurn - nextTurn));
-        print("");
         
         if (nextTurn >= pastMovements.Count)
         {
@@ -169,10 +218,9 @@ public class Player : Character
         else downButtonImage.sprite = buttonEnabled;
 
         if (turn >= pastMovements.Count - 1) upButtonImage.sprite = buttonDisabled;
-        else upButtonImage.sprite = buttonEnabled;
-        
+        else upButtonImage.sprite = buttonEnabled;  
     }
-
+    #endregion rewind
 
     protected override void Move(int xDir, int yDir)
     {
@@ -182,8 +230,8 @@ public class Player : Character
         GameManager.instance.playersTurn = false;
     }
 
-
-    public override void Shoot()
+    #region shoot
+    public void ShootGun()
     {
         if (gunAmmo < 0) return; // Avoid negative numbers
         if (gunAmmo-- == 0) return;
@@ -193,7 +241,7 @@ public class Player : Character
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up);
         bc2D.enabled = true;
 
-        base.Shoot();
+        Shoot();
 
         pastMovements.Add(transform.position);
         pastOrientations.Add(transform.localEulerAngles);
@@ -202,11 +250,45 @@ public class Player : Character
         if (hit.transform.CompareTag("Enemy")) hit.transform.SendMessage("TakeDamage");
     }
 
+
+    public void ShootTaser()
+    {
+        if (taserAmmo < 0) return; // Avoid negative numbers
+        if (taserAmmo-- == 0) return;
+        taserAmmoText.text = taserAmmo.ToString();
+
+        bc2D.enabled = false;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up);
+        bc2D.enabled = true;
+
+        StartCoroutine(ShootTaser(hit));
+    }
+
+
+    private IEnumerator ShootTaser(RaycastHit2D hit)
+    {
+        animator.enabled = true;
+        animator.SetBool("Taser", true);
+
+        yield return null;
+
+        Shoot();
+
+        pastMovements.Add(transform.position);
+        pastOrientations.Add(transform.localEulerAngles);
+
+        if (hit.transform == null) yield break;
+        if (hit.transform.CompareTag("Enemy")) hit.transform.SendMessage("TaserKnockOut");
+    }
+
+
     protected override IEnumerator CShoot()
     {
         yield return StartCoroutine(base.CShoot());
         GameManager.instance.playersTurn = false;
     }
+    #endregion shoot
+
 
     protected override IEnumerator CTakeDamage()
     {

@@ -32,6 +32,7 @@ public class Character : MonoBehaviour
     // Health
     // [HideInInspector]
     public bool alive = true;
+    public bool knockedOut = false;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -120,7 +121,6 @@ public class Character : MonoBehaviour
         if (!alive) return;
 
         isPerformingAction = true;
-        print("shooting");
         StartCoroutine(CShoot());
     }
 

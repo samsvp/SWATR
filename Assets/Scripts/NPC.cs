@@ -7,12 +7,41 @@ public abstract class NPC : Character
     private Transform target;
 
     protected List<bool> aliveTurns = new List<bool>() { true };
+    protected List<bool> knockedOutTurns = new List<bool>() { false };
 
     // Use this for initialization
     protected override void Start()
     {
         GameManager.instance.AddNPCToList(this); // Add this enemy to the list of enemies
         base.Start();
+    }
+
+    public virtual void KnockOut()
+    {
+        print("Knocked out");
+        TaserKnockOut();
+    }
+
+
+    public virtual void TaserKnockOut()
+    {
+        bc2D.enabled = false;
+
+        alive = false;
+        knockedOut = true;
+        StartCoroutine(CTaserKnockOut());
+    }
+
+
+    protected virtual IEnumerator CTaserKnockOut()
+    {
+        print("HideFlags");
+        animator.enabled = true;
+        animator.SetBool("TaserKnockOut", true);
+        yield return null;
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f);
+        yield return null;
+        animator.enabled = false;
     }
 
 

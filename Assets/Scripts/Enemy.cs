@@ -26,6 +26,7 @@ public class Enemy : NPC
     public override void ChooseAction()
     {
         aliveTurns.Add(alive);
+        knockedOutTurns.Add(knockedOut);
 
         if (!render.isVisible || !alive)
         {
@@ -78,8 +79,8 @@ public class Enemy : NPC
 
         // Check if enemy is alive
         if (!alive && aliveTurns[turn]) Resurrect();
-        else if (alive && !aliveTurns[turn]) TakeDamage();
-        
+        else if (alive && !aliveTurns[turn] && !knockedOutTurns[turn]) TakeDamage();
+        else if (alive && !aliveTurns[turn] && knockedOutTurns[turn]) KnockOut();
     }
 
 
@@ -97,7 +98,9 @@ public class Enemy : NPC
     {
         animator.enabled = true;
         animator.SetBool("Death", false);
+        animator.SetBool("TaserKnockOut", false);
         alive = true;
+        knockedOut = false;
     }
 
 

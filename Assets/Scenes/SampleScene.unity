@@ -338,7 +338,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 9e30447694b6f4345bff79140dcea74e, type: 3}
-    m_FontSize: 30
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -368,7 +368,7 @@ GameObject:
   m_Component:
   - component: {fileID: 73741843}
   m_Layer: 5
-  m_Name: Tazer
+  m_Name: Taser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -392,7 +392,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -316, y: 65}
+  m_AnchoredPosition: {x: -316, y: 93.2}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &130276926
@@ -453,7 +453,7 @@ GameObject:
   - component: {fileID: 150836447}
   - component: {fileID: 150836446}
   m_Layer: 5
-  m_Name: TazerAmmoLeftNumber
+  m_Name: TaserAmmoLeftNumber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -527,7 +527,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 9e30447694b6f4345bff79140dcea74e, type: 3}
-    m_FontSize: 30
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -716,7 +716,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 9e30447694b6f4345bff79140dcea74e, type: 3}
-    m_FontSize: 30
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2213,6 +2213,7 @@ MonoBehaviour:
   moveTime: 0.03
   isPerformingAction: 0
   alive: 1
+  knockedOut: 0
   x: 0
   y: 0
   rewindTurns: 5
@@ -2221,14 +2222,18 @@ MonoBehaviour:
   rewindsLeftText: {fileID: 1114924198}
   gunAmmo: 10
   gunAmmoText: {fileID: 49560929}
-  tazerAmmo: 5
-  tazerAmmoText: {fileID: 150836448}
+  taserAmmo: 5
+  taserAmmoText: {fileID: 150836448}
   turnButton: {fileID: 623706623}
   downButton: {fileID: 24627045}
   upButton: {fileID: 545234943}
   buttonEnabled: {fileID: -5402412272178277761, guid: fa9759ae1d908634c8a966dc6f9a2d3f,
     type: 3}
   buttonDisabled: {fileID: 2013261503205373015, guid: fa9759ae1d908634c8a966dc6f9a2d3f,
+    type: 3}
+  gunSprite: {fileID: -2311659948842064771, guid: 2dc6bd4f7cac7b94dad5fed62e0900ff,
+    type: 3}
+  taserSprite: {fileID: -1662632911399033726, guid: 89b8195ea7de1774393c63946810d47a,
     type: 3}
 --- !u!61 &1058485285
 BoxCollider2D:
@@ -2505,6 +2510,7 @@ MonoBehaviour:
   moveTime: 0.03
   isPerformingAction: 0
   alive: 1
+  knockedOut: 0
   movement:
   - {x: 0, y: 1}
   - {x: 0, y: 1}
@@ -2742,7 +2748,7 @@ GameObject:
   - component: {fileID: 1307689711}
   - component: {fileID: 1307689710}
   m_Layer: 5
-  m_Name: TazerAmmo
+  m_Name: TaserAmmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2816,7 +2822,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 9e30447694b6f4345bff79140dcea74e, type: 3}
-    m_FontSize: 30
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2827,7 +2833,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '   Tazer Ammo'
+  m_Text: Taser Ammo
 --- !u!222 &1307689713
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2935,6 +2941,7 @@ MonoBehaviour:
   moveTime: 0.03
   isPerformingAction: 0
   alive: 1
+  knockedOut: 0
   maxTurnsLeft: 8
   isDead: 0
   isSaved: 0
