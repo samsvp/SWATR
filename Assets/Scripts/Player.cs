@@ -60,7 +60,7 @@ public class Player : Character
     {
         gun,
         taser,
-        granade
+        grenade
     };
 
     private Weapon weapon = Weapon.gun;
@@ -122,7 +122,7 @@ public class Player : Character
                 case Weapon.taser:
                     ShootTaser();
                     break;
-                case Weapon.granade:
+                case Weapon.grenade:
                     break;
                 default:
                     break;
