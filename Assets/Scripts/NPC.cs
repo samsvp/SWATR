@@ -35,7 +35,6 @@ public abstract class NPC : Character
 
     protected virtual IEnumerator CTaserKnockOut()
     {
-        print("HideFlags");
         animator.enabled = true;
         animator.SetBool("TaserKnockOut", true);
         yield return null;
