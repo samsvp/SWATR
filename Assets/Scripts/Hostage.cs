@@ -91,6 +91,8 @@ public class Hostage : NPC
 
     public override void EraseTurns(int turn)
     {
+
+        if (!isSaved) savedOnTurn = -1;
         UpdateTurnsLeftGUI(maxTurnsLeft - turn);
     }
 
@@ -99,9 +101,7 @@ public class Hostage : NPC
     {
         turnsLeft = maxTurnsLeft - turn;
         UpdateTurnsLeftGUI(turnsLeft);
-
-        print("turn " + turn);
-        print("savedOnTurn " + savedOnTurn);
+        
         if (isSaved)
         {
             if (savedOnTurn > turn) UnSaveHostage();
@@ -134,12 +134,10 @@ public class Hostage : NPC
 
     public void SaveHostage()
     {
-        print("saved");
         isSaved = true;
         isDead = false;
         savedOnTurn = GameManager.instance.turns;
         UpdateTurnsLeftGUI(savedOnTurn);
-        print("savedOnTurn: " + savedOnTurn);
     }
 
 
@@ -147,7 +145,7 @@ public class Hostage : NPC
     {
         render.sprite = captiveSprite;
         isSaved = false;
-        EraseTurns(GameManager.instance.turns);
+        UpdateTurnsLeftGUI(maxTurnsLeft - GameManager.instance.turns);
     }
 
 
