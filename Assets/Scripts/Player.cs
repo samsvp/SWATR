@@ -15,6 +15,12 @@ public class Player : Character
     [HideInInspector]
     public int x, y;
 
+    // Rewind logic
+    public int rewindTurns = 5;
+    public int rewindsLeft = 5;
+    [SerializeField]
+    private Text rewindsLeftText;
+
     // Turn button
     public GameObject turnButton;
     private Text turnButtonText;
@@ -92,13 +98,16 @@ public class Player : Character
             GameManager.instance.EraseTurns(turn);
             return;
         }
+
+        if (--rewindsLeft < 0) return;
+        RewindsLeft();
         turnButton.SetActive(true);
         RefreshArrows(Int32.Parse(turnButtonText.text));
         GameManager.instance.Wait = true;
         //GameManager.instance.Rewind(1);
     }
 
-
+    
     public void ChangeRewindTurn(int i)
     {
         int turn = Int32.Parse(turnButtonText.text);
@@ -122,6 +131,12 @@ public class Player : Character
         GameManager.instance.Rewind(nextTurn);
 
         RefreshArrows(nextTurn);
+    }
+
+
+    public void RewindsLeft()
+    {
+        rewindsLeftText.text = rewindsLeft.ToString();
     }
 
 
