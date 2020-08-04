@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,6 +35,10 @@ public class Player : Character
     private int taserAmmo = 5;
     [SerializeField]
     private Text taserAmmoText;
+    [SerializeField]
+    private int grenadeAmmo = 3;
+    [SerializeField]
+    private Text grenadeAmmoText;
 
     // Turn button
     public GameObject turnButton;
@@ -54,6 +59,8 @@ public class Player : Character
     private Sprite gunSprite;
     [SerializeField]
     private Sprite taserSprite;
+    [SerializeField]
+    private Sprite grenadeSprite;
 
     // Weapon Logic
     public enum Weapon
@@ -64,6 +71,11 @@ public class Player : Character
     };
 
     private Weapon weapon = Weapon.gun;
+
+    // Other game objects
+    [SerializeField]
+    private GameObject grenade;
+    private GameObject highlight;
 
     void Awake()
     {
@@ -79,8 +91,11 @@ public class Player : Character
         upButtonImage = upButton.GetComponent<Image>();
         downButtonImage = downButton.GetComponent<Image>();
 
+        highlight = transform.GetChild(0).gameObject;
+
         gunAmmoText.text = gunAmmo.ToString();
         taserAmmoText.text = taserAmmo.ToString();
+        grenadeAmmoText.text = grenadeAmmo.ToString();
     }
 
     // Update is called once per frame
@@ -123,6 +138,7 @@ public class Player : Character
                     ShootTaser();
                     break;
                 case Weapon.grenade:
+                    ShootGrenade();
                     break;
                 default:
                     break;
@@ -144,18 +160,67 @@ public class Player : Character
             weapon = Weapon.gun;
             sprite = gunSprite;
             animator.SetBool("Taser", false);
+            animator.SetBool("Grenade", false);
+            highlight.SetActive(false);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             weapon = Weapon.taser;
             sprite = taserSprite;
             animator.SetBool("Taser", true);
+            animator.SetBool("Grenade", false);
+            highlight.SetActive(false);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
+            weapon = Weapon.grenade;
+            sprite = grenadeSprite;
             animator.SetBool("Taser", false);
+            animator.SetBool("Grenade", true);
+            GrenadePosition();
         }
     }
+
+
+    private void GrenadePosition()
+    {
+        if (grenadeAmmo <= 0)
+        {
+            highlight.SetActive(false);
+            return;
+        }
+        highlight.SetActive(true);
+        HighlightPosition();
+    }
+
+
+    private void HighlightPosition()
+    {
+        bc2D.enabled = false;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up);
+        bc2D.enabled = true;
+        
+        if (hit.transform != null)
+        {
+            var hitPos = hit.transform.position;
+
+            if (hitPos.x == transform.position.x)
+            {
+                float y = hitPos.y;
+                y = y > transform.position.y ? y - 2 : y + 2;
+                highlight.transform.position = new Vector3(highlight.transform.position.x, y);
+            }
+            else
+            {
+                float x = hitPos.x;
+                x = x > transform.position.x ? x - 2 : x + 2;
+                highlight.transform.position = new Vector3(x, highlight.transform.position.y);
+            }
+            
+        }
+        else highlight.transform.localPosition = new Vector3(0, 6);
+    }
+
 
     #region rewind
     public void Rewind()
@@ -222,12 +287,28 @@ public class Player : Character
     }
     #endregion rewind
 
-    protected override void Move(int xDir, int yDir)
+    protected override bool Move(int xDir, int yDir)
     {
         animator.enabled = true;
-        base.Move(xDir, yDir);
-        // Set playersTurn as false so that the enemies can move
-        GameManager.instance.playersTurn = false;
+        if (weapon == Weapon.grenade) highlight.SetActive(false);
+        if (base.Move(xDir, yDir))
+        {
+            // Set playersTurn as false so that the enemies can move
+            GameManager.instance.playersTurn = false;
+            return true;
+        }
+        return false;
+    }
+
+
+    protected override IEnumerator SmoothMovement(Vector3 end)
+    {
+        yield return StartCoroutine(base.SmoothMovement(end));
+        if (weapon == Weapon.grenade)
+        {
+            highlight.SetActive(true);
+            GrenadePosition();
+        }
     }
 
     #region shoot
@@ -251,6 +332,13 @@ public class Player : Character
     }
 
 
+    protected override IEnumerator CShoot()
+    {
+        yield return StartCoroutine(base.CShoot());
+        GameManager.instance.playersTurn = false;
+    }
+
+
     public void ShootTaser()
     {
         if (taserAmmo < 0) return; // Avoid negative numbers
@@ -267,9 +355,11 @@ public class Player : Character
 
     private IEnumerator ShootTaser(RaycastHit2D hit)
     {
+        // Make the taser transition
         animator.enabled = true;
         animator.SetBool("Taser", true);
-
+        animator.SetBool("Grenade", false);
+        // Wait a frame for the transition to take place
         yield return null;
 
         Shoot();
@@ -282,11 +372,40 @@ public class Player : Character
     }
 
 
-    protected override IEnumerator CShoot()
+    public void ShootGrenade()
     {
-        yield return StartCoroutine(base.CShoot());
-        GameManager.instance.playersTurn = false;
+        if (grenadeAmmo < 0) return; // Avoid negative numbers
+        if (grenadeAmmo-- == 0) return;
+        grenadeAmmoText.text = grenadeAmmo.ToString();
+
+        bc2D.enabled = false;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up);
+        bc2D.enabled = true;
+
+        StartCoroutine(ShootGrenade(hit));
     }
+
+
+    private IEnumerator ShootGrenade(RaycastHit2D hit)
+    {
+        // Make the taser transition
+        animator.enabled = true;
+        animator.SetBool("Taser", false);
+        animator.SetBool("Grenade", true);
+        // Wait a frame for the transition to take place
+        yield return null;
+
+        isPerformingAction = true;
+        yield return StartCoroutine(CShoot());
+
+        pastMovements.Add(transform.position);
+        pastOrientations.Add(transform.localEulerAngles);
+
+        // Spawn Grenade
+        Instantiate(grenade, highlight.transform.position, Quaternion.identity);
+        if (grenadeAmmo <= 0) highlight.SetActive(false);
+    }
+    
     #endregion shoot
 
 

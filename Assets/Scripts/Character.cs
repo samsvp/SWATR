@@ -56,13 +56,13 @@ public class Character : MonoBehaviour
     }
 
 
-    protected virtual void Move(int xDir, int yDir)
+    protected virtual bool Move(int xDir, int yDir)
     {
         if (!alive)
         {
             pastMovements.Add(transform.position);
             pastOrientations.Add(transform.localEulerAngles);
-            return;
+            return true;
         }
 
         Vector2 start = transform.position;
@@ -83,11 +83,13 @@ public class Character : MonoBehaviour
             // Add to the list of past movements
             pastMovements.Add(end);
             pastOrientations.Add(transform.localEulerAngles);
+            return true;
         }
+        return false;
     }
 
 
-    protected IEnumerator SmoothMovement(Vector3 end)
+    protected virtual IEnumerator SmoothMovement(Vector3 end)
     {
         isPerformingAction = true;
 
@@ -143,7 +145,7 @@ public class Character : MonoBehaviour
         // Disable colliders (remember to reactivate it if it comes back to live
         // through a rewind)
         bc2D.enabled = false;
-
+        
         alive = false;
         StartCoroutine(CTakeDamage());
     }

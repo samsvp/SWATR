@@ -87,8 +87,11 @@ public class Enemy : NPC
     public override void EraseTurns(int turn)
     {
         base.EraseTurns(turn);
+
         aliveTurns.RemoveRange(turn + 1, aliveTurns.Count - turn - 1);
+        knockedOutTurns.RemoveRange(turn + 1, knockedOutTurns.Count - turn - 1);
         pastMovementIndexes.RemoveRange(turn, pastMovementIndexes.Count - turn);
+
         if (turn > 0) nextMovementIndex = pastMovementIndexes[turn - 1] + 1;
         else nextMovementIndex = 0;
     }
@@ -115,6 +118,20 @@ public class Enemy : NPC
         bc2D.enabled = true;
 
         return hit;
+    }
+
+
+    protected override IEnumerator CTakeDamage()
+    {
+        yield return StartCoroutine(base.CTakeDamage());
+        GameManager.instance.AllHostagesSaved();
+    }
+
+
+    protected override IEnumerator CTaserKnockOut()
+    {
+        yield return StartCoroutine(base.CTaserKnockOut());
+        GameManager.instance.AllHostagesSaved();
     }
 
 }

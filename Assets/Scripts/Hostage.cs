@@ -132,10 +132,11 @@ public class Hostage : NPC
     }
 
 
-    public void IsHostageSaved()
+    public bool IsHostageSaved()
     {
-        if (enemies.TrueForAll(e => e.alive)) return;
+        if (enemies.TrueForAll(e => e.alive)) return false;
         SaveHostage();
+        return true;
     }
 
 

@@ -32,6 +32,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public Text turnsText;
 
+    // Grenade Manager
+    [HideInInspector]
+    public bool grenadeSet = false;
+    [HideInInspector]
+    public int grenadeCountdown;
+
     public bool Wait
     {
         get
@@ -47,12 +53,12 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-
         // Always use this code to ensure that there is no GameManager duplicate
         if (instance == null) instance = this;
         else if (instance != this) Destroy(gameObject); // Destroy the GameManager if we end up with two instances of it
 
         NPCs = new List<NPC>();
+        grenadeCountdown = 2;
     }
     
 
@@ -77,6 +83,12 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ChooseNPCsAction()
     {
+        if (grenadeSet)
+        {
+            grenadeCountdown--;
+            print(grenadeCountdown);
+        }
+
         turnsText.text = (++turns).ToString();
 
         NPCsMoving = true;
@@ -117,6 +129,12 @@ public class GameManager : MonoBehaviour
         {
             NPCs[i].EraseTurns(turn);
         }
+    }
+
+
+    public bool AllHostagesSaved()
+    {
+        return NPCs.Where(NPC => NPC is Hostage).All(npc => ((Hostage)npc).IsHostageSaved());
     }
 
 
