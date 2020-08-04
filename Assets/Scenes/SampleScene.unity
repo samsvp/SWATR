@@ -649,7 +649,7 @@ GameObject:
   - component: {fileID: 187306108}
   - component: {fileID: 187306107}
   - component: {fileID: 187306106}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Furniture_153
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2743,6 +2743,9 @@ MonoBehaviour:
     type: 3}
   grenadeSprite: {fileID: -5851877121197619488, guid: 7066edd29dfbf7f46ae8762067704903,
     type: 3}
+  highlightMask:
+    serializedVersion: 2
+    m_Bits: 55
   grenade: {fileID: 4659043951440811489, guid: caacc3fb758cd9844be4d470ac70a4d7, type: 3}
 --- !u!61 &1058485285
 BoxCollider2D:
@@ -2869,7 +2872,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1058485283}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -4, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1510502363}
@@ -4760,11 +4763,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Highlight
-      objectReference: {fileID: 0}
-    - target: {fileID: 4176408594909048998, guid: d9610b9a9808c9c4495221d663590654,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4176408594909048999, guid: d9610b9a9808c9c4495221d663590654,
         type: 3}

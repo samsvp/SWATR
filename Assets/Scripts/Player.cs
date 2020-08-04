@@ -72,6 +72,9 @@ public class Player : Character
 
     private Weapon weapon = Weapon.gun;
 
+    [SerializeField]
+    private LayerMask highlightMask;
+
     // Other game objects
     [SerializeField]
     private GameObject grenade;
@@ -197,7 +200,8 @@ public class Player : Character
     private void HighlightPosition()
     {
         bc2D.enabled = false;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, Mathf.Infinity,
+            highlightMask, -Mathf.Infinity, Mathf.Infinity);
         bc2D.enabled = true;
         
         if (hit.transform != null)
