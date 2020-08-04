@@ -17,8 +17,6 @@ public class Player : Character
     public int x, y;
 
     // Rewind logic
-    public int rewindTurns = 5;
-    [HideInInspector]
     public int rewindsLeft = 5;
     // How many turns the player can rewind back to
     public int rewindLimit = 5;
@@ -98,12 +96,14 @@ public class Player : Character
         gunAmmoText.text = gunAmmo.ToString();
         taserAmmoText.text = taserAmmo.ToString();
         grenadeAmmoText.text = grenadeAmmo.ToString();
+        rewindsLeftText.text = rewindsLeft.ToString();
     }
 
     // Update is called once per frame
     protected override void Update()
     {
         if (Input.GetKeyDown(KeyCode.R)) ReloadScene.Reload();
+        if (highlight.activeSelf) HighlightPosition();
     }
 
 
@@ -196,7 +196,7 @@ public class Player : Character
     }
 
 
-    private void HighlightPosition()
+    public void HighlightPosition()
     {
         bc2D.enabled = false;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, 6,
@@ -243,12 +243,12 @@ public class Player : Character
         }
 
         if (--rewindsLeft < 0) return;
+        
         rewindBeginTurn = GameManager.instance.turns;
         RewindsLeft();
         turnButton.SetActive(true);
         RefreshArrows(Int32.Parse(turnButtonText.text));
         GameManager.instance.Wait = true;
-        //GameManager.instance.Rewind(1);
     }
 
     
@@ -273,7 +273,7 @@ public class Player : Character
 
         turnButtonText.text = nextTurn.ToString();
         GameManager.instance.Rewind(nextTurn);
-
+        
         RefreshArrows(nextTurn);
     }
 
@@ -420,7 +420,7 @@ public class Player : Character
         yield return StartCoroutine(base.CTakeDamage());
 
         highlight.SetActive(false);
-
+        print("wasted");
         while (true)
         {
             if (Input.GetKeyDown(KeyCode.R)) ReloadScene.Reload();

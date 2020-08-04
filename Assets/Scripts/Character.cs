@@ -100,7 +100,6 @@ public class Character : MonoBehaviour
             Vector3 newPosition = Vector3.MoveTowards(rb2D.position, target, inverseMoveTime * Time.deltaTime);
             rb2D.MovePosition(newPosition);
             sqrRemainingDistance = (transform.position - target).sqrMagnitude;
-            print(name);
             yield return null; // Wait for a frame before continuing the loop
         }
         transform.position = target;

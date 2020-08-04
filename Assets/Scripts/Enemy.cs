@@ -39,7 +39,6 @@ public class Enemy : NPC
         if (hit.transform == null) MoveNPC();
         else if (hit.transform.CompareTag("Player"))
         {
-            hit.transform.SendMessage("TakeDamage");
             Shoot();
         }
         else MoveNPC();
@@ -71,6 +70,9 @@ public class Enemy : NPC
     /// <param name="turn"></param>
     public override void Rewind(int turn)
     {
+        print(turn);
+        print(pastMovements.Count);
+        print(name + transform.parent.name);
         transform.position = pastMovements[turn];
         transform.localEulerAngles = pastOrientations[turn];
 
@@ -119,10 +121,15 @@ public class Enemy : NPC
             Player.instance.highlightMask, -Mathf.Infinity, Mathf.Infinity);
         RaycastHit2D _hit = Physics2D.Raycast(transform.position, transform.up);
         bc2D.enabled = true;
-
         
-
         return hit;
+    }
+
+
+    protected override IEnumerator CShoot()
+    {
+        yield return StartCoroutine(base.CShoot());
+        if (alive) Player.instance.SendMessage("TakeDamage");
     }
 
 

@@ -11562,7 +11562,7 @@ PrefabInstance:
     - target: {fileID: 4109599078085890897, guid: 3a026539bd9610d4d83dddaf88c904b8,
         type: 3}
       propertyPath: movement.Array.size
-      value: 2
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4109599078085890897, guid: 3a026539bd9610d4d83dddaf88c904b8,
         type: 3}
@@ -11572,7 +11572,7 @@ PrefabInstance:
     - target: {fileID: 4109599078085890897, guid: 3a026539bd9610d4d83dddaf88c904b8,
         type: 3}
       propertyPath: movement.Array.data[1].y
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4109599078085890897, guid: 3a026539bd9610d4d83dddaf88c904b8,
         type: 3}
@@ -11587,12 +11587,12 @@ PrefabInstance:
     - target: {fileID: 4109599078085890897, guid: 3a026539bd9610d4d83dddaf88c904b8,
         type: 3}
       propertyPath: movement.Array.data[3].x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4109599078085890897, guid: 3a026539bd9610d4d83dddaf88c904b8,
         type: 3}
       propertyPath: movement.Array.data[3].y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4109599078085890897, guid: 3a026539bd9610d4d83dddaf88c904b8,
         type: 3}
@@ -11607,22 +11607,27 @@ PrefabInstance:
     - target: {fileID: 4109599078085890897, guid: 3a026539bd9610d4d83dddaf88c904b8,
         type: 3}
       propertyPath: movement.Array.data[6].y
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4109599078085890897, guid: 3a026539bd9610d4d83dddaf88c904b8,
-        type: 3}
-      propertyPath: movement.Array.data[7].x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4109599078085890897, guid: 3a026539bd9610d4d83dddaf88c904b8,
         type: 3}
-      propertyPath: movement.Array.data[7].y
+      propertyPath: movement.Array.data[7].x
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4109599078085890897, guid: 3a026539bd9610d4d83dddaf88c904b8,
+        type: 3}
+      propertyPath: movement.Array.data[7].y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4109599078085890897, guid: 3a026539bd9610d4d83dddaf88c904b8,
         type: 3}
       propertyPath: movement.Array.data[0].x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4109599078085890897, guid: 3a026539bd9610d4d83dddaf88c904b8,
+        type: 3}
+      propertyPath: movement.Array.data[6].x
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 4109599078085890898, guid: 3a026539bd9610d4d83dddaf88c904b8,
         type: 3}
@@ -11632,7 +11637,7 @@ PrefabInstance:
     - target: {fileID: 4109599078085890898, guid: 3a026539bd9610d4d83dddaf88c904b8,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4109599078085890900, guid: 3a026539bd9610d4d83dddaf88c904b8,
         type: 3}
@@ -11642,7 +11647,7 @@ PrefabInstance:
     - target: {fileID: 4109599078085890900, guid: 3a026539bd9610d4d83dddaf88c904b8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 20
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4109599078085890900, guid: 3a026539bd9610d4d83dddaf88c904b8,
         type: 3}
@@ -12074,6 +12079,11 @@ PrefabInstance:
       propertyPath: enemies.Array.data[1]
       value: 
       objectReference: {fileID: 1080595341}
+    - target: {fileID: 2985456819384357981, guid: fbde434620c4aa248b3a0285e1690f79,
+        type: 3}
+      propertyPath: maxTurnsLeft
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbde434620c4aa248b3a0285e1690f79, type: 3}
 --- !u!1001 &774909834
@@ -15894,7 +15904,7 @@ PrefabInstance:
     - target: {fileID: 4109599078085890900, guid: 3a026539bd9610d4d83dddaf88c904b8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 18
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 4109599078085890900, guid: 3a026539bd9610d4d83dddaf88c904b8,
         type: 3}
@@ -16081,6 +16091,21 @@ PrefabInstance:
       propertyPath: rewindsLeftText
       value: 
       objectReference: {fileID: 589870513}
+    - target: {fileID: 5076543942689869613, guid: ccab743cd2162a249983284e4d62e15b,
+        type: 3}
+      propertyPath: rewindTurns
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076543942689869613, guid: ccab743cd2162a249983284e4d62e15b,
+        type: 3}
+      propertyPath: rewindLimit
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076543942689869613, guid: ccab743cd2162a249983284e4d62e15b,
+        type: 3}
+      propertyPath: rewindsLeft
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccab743cd2162a249983284e4d62e15b, type: 3}
 --- !u!1 &1513495783
@@ -19526,7 +19551,7 @@ PrefabInstance:
     - target: {fileID: 2985456819384357981, guid: fbde434620c4aa248b3a0285e1690f79,
         type: 3}
       propertyPath: enemies.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2985456819384357981, guid: fbde434620c4aa248b3a0285e1690f79,
         type: 3}
@@ -19538,6 +19563,11 @@ PrefabInstance:
       propertyPath: enemies.Array.data[1]
       value: 
       objectReference: {fileID: 1854597382}
+    - target: {fileID: 2985456819384357981, guid: fbde434620c4aa248b3a0285e1690f79,
+        type: 3}
+      propertyPath: maxTurnsLeft
+      value: 40
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbde434620c4aa248b3a0285e1690f79, type: 3}
 --- !u!1 &1756976987
@@ -19749,6 +19779,11 @@ PrefabInstance:
         type: 3}
       propertyPath: enemies.Array.data[1]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2985456819384357981, guid: fbde434620c4aa248b3a0285e1690f79,
+        type: 3}
+      propertyPath: maxTurnsLeft
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbde434620c4aa248b3a0285e1690f79, type: 3}
@@ -20636,6 +20671,11 @@ PrefabInstance:
         type: 3}
       propertyPath: enemies.Array.data[1]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2985456819384357981, guid: fbde434620c4aa248b3a0285e1690f79,
+        type: 3}
+      propertyPath: maxTurnsLeft
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbde434620c4aa248b3a0285e1690f79, type: 3}
