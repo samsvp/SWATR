@@ -83,11 +83,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ChooseNPCsAction()
     {
-        if (grenadeSet)
-        {
-            grenadeCountdown--;
-            print(grenadeCountdown);
-        }
+        if (grenadeSet) grenadeCountdown--;
 
         turnsText.text = (++turns).ToString();
 

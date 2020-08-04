@@ -413,6 +413,8 @@ public class Player : Character
     {
         yield return StartCoroutine(base.CTakeDamage());
 
+        highlight.SetActive(false);
+
         while (true)
         {
             if (Input.GetKeyDown(KeyCode.R)) ReloadScene.Reload();
