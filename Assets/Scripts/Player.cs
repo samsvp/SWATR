@@ -200,27 +200,30 @@ public class Player : Character
     private void HighlightPosition()
     {
         bc2D.enabled = false;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, Mathf.Infinity,
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, 6,
             highlightMask, -Mathf.Infinity, Mathf.Infinity);
         bc2D.enabled = true;
-        
+
+        float tol = 0.1f;
+
         if (hit.transform != null)
         {
-            var hitPos = hit.transform.position;
-
-            if (hitPos.x == transform.position.x)
+            if (Mathf.Abs(hit.point.x - transform.position.x) < tol)
             {
-                float y = hitPos.y;
-                y = y > transform.position.y ? y - 2 : y + 2;
-                highlight.transform.position = new Vector3(highlight.transform.position.x, y);
+                int hitY = (int)hit.point.y;
+                int offset = hit.point.y > transform.position.y ? -1 : 1;
+                int y = hitY % 2 == 1 ? hitY + offset : hitY + 2 * offset;
+                if (hit.point.y - y > 2) y += 2;
+                highlight.transform.position = new Vector3(transform.position.x, y);
             }
-            else
+            else if (Mathf.Abs(hit.point.y - transform.position.y) < tol)
             {
-                float x = hitPos.x;
-                x = x > transform.position.x ? x - 2 : x + 2;
-                highlight.transform.position = new Vector3(x, highlight.transform.position.y);
+                int hitX = (int)hit.point.x;
+                int offset = hit.point.x > transform.position.x ? -1 : 1;
+                int x = hitX % 2 == 1 ? hitX + offset : hitX + 2 * offset;
+                if (hit.point.x - x > 2) x += 2;
+                highlight.transform.position = new Vector3(x, transform.position.y);
             }
-            
         }
         else highlight.transform.localPosition = new Vector3(0, 6);
     }
