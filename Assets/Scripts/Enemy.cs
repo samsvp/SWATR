@@ -56,6 +56,7 @@ public class Enemy : NPC
             return;
         }
 
+        if (nextMovementIndex == movement.Count) nextMovementIndex = 0;
         Vector2 currentMovent = movement[nextMovementIndex];
         Move((int)currentMovent.x, (int)currentMovent.y);
         pastMovementIndexes.Add(nextMovementIndex);
@@ -114,8 +115,12 @@ public class Enemy : NPC
     private RaycastHit2D RShoot()
     {
         bc2D.enabled = false;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, Mathf.Infinity,
+            Player.instance.highlightMask, -Mathf.Infinity, Mathf.Infinity);
+        RaycastHit2D _hit = Physics2D.Raycast(transform.position, transform.up);
         bc2D.enabled = true;
+
+        
 
         return hit;
     }

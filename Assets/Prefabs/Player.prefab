@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e62d9eb0ace212742bd68da3e8532cdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveTime: 0.03
+  moveTime: 0.05
   isPerformingAction: 0
   alive: 1
   knockedOut: 0

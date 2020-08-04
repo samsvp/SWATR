@@ -71,9 +71,8 @@ public class Player : Character
     };
 
     private Weapon weapon = Weapon.gun;
-
-    [SerializeField]
-    private LayerMask highlightMask;
+    
+    public LayerMask highlightMask;
 
     // Other game objects
     [SerializeField]
@@ -202,10 +201,11 @@ public class Player : Character
         bc2D.enabled = false;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, 6,
             highlightMask, -Mathf.Infinity, Mathf.Infinity);
-        bc2D.enabled = true;
-
+        bc2D.enabled = true;             
+        
         float tol = 0.1f;
 
+        // Reposition the highlight if something other than the window was hit
         if (hit.transform != null)
         {
             if (Mathf.Abs(hit.point.x - transform.position.x) < tol)
@@ -326,8 +326,9 @@ public class Player : Character
         gunAmmoText.text = gunAmmo.ToString();
 
         bc2D.enabled = false;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up);
-        bc2D.enabled = true;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, Mathf.Infinity,
+            highlightMask, -Mathf.Infinity, Mathf.Infinity);
+        bc2D.enabled = true;     
 
         Shoot();
 
@@ -384,16 +385,14 @@ public class Player : Character
         if (grenadeAmmo < 0) return; // Avoid negative numbers
         if (grenadeAmmo-- == 0) return;
         grenadeAmmoText.text = grenadeAmmo.ToString();
+        
+        BreakWindow();
 
-        bc2D.enabled = false;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up);
-        bc2D.enabled = true;
-
-        StartCoroutine(ShootGrenade(hit));
+        StartCoroutine(CShootGrenade());
     }
 
 
-    private IEnumerator ShootGrenade(RaycastHit2D hit)
+    private IEnumerator CShootGrenade()
     {
         // Make the taser transition
         animator.enabled = true;

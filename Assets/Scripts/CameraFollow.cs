@@ -56,9 +56,9 @@ public class CameraFollow : MonoBehaviour
                 position.x = Mathf.Lerp(this.transform.position.x, mouseWorldPos.x, interpolation);
             }
 
-            if (Mathf.Abs(player.transform.position.x - position.x) > 3)
+            if (Mathf.Abs(player.transform.position.x - position.x) > 16)
                 position.x = transform.position.x;
-            if (Mathf.Abs(player.transform.position.y - position.y) > 3)
+            if (Mathf.Abs(player.transform.position.y - position.y) > 16)
                 position.y = transform.position.y;
         }
         else

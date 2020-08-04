@@ -64,7 +64,6 @@ public class Character : MonoBehaviour
             pastOrientations.Add(transform.localEulerAngles);
             return true;
         }
-
         Vector2 start = transform.position;
         Vector2 end = start + 2 * new Vector2(xDir, yDir);
 
@@ -95,16 +94,15 @@ public class Character : MonoBehaviour
 
         Vector3 target = new Vector3((int)end.x, (int)end.y);
         float sqrRemainingDistance = (transform.position - target).sqrMagnitude;
-
-        while (sqrRemainingDistance > 0.01f)
+        while (sqrRemainingDistance > 0.05f)
         {
             // Move towards the positon we want
-            Vector3 newPosition = Vector3.MoveTowards(rb2D.position, end, inverseMoveTime * Time.deltaTime);
+            Vector3 newPosition = Vector3.MoveTowards(rb2D.position, target, inverseMoveTime * Time.deltaTime);
             rb2D.MovePosition(newPosition);
             sqrRemainingDistance = (transform.position - target).sqrMagnitude;
+            print(name);
             yield return null; // Wait for a frame before continuing the loop
         }
-
         transform.position = target;
 
         isPerformingAction = false;
@@ -123,6 +121,7 @@ public class Character : MonoBehaviour
         if (!alive) return;
 
         isPerformingAction = true;
+        BreakWindow();
         StartCoroutine(CShoot());
     }
 
@@ -137,6 +136,21 @@ public class Character : MonoBehaviour
         yield return null;
         animator.enabled = false;
         isPerformingAction = false;
+    }
+
+
+    /// <summary>
+    /// Breaks a window if it's hit
+    /// </summary>
+    protected virtual void BreakWindow()
+    {
+        bc2D.enabled = false;
+        RaycastHit2D _hit = Physics2D.Raycast(transform.position, transform.up);
+        bc2D.enabled = true;
+
+        if (_hit.transform != null)
+            if (_hit.collider.name.Contains("Window"))
+                _hit.collider.GetComponent<Window>().Break();
     }
 
 

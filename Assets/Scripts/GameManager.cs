@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
         }
 
         yield return null;
-        yield return new WaitWhile(() => NPCs.All((npc) => npc.isPerformingAction));
+        yield return new WaitWhile(() => NPCs.Any((npc) => npc.isPerformingAction));
         
         NPCsMoving = false;
         playersTurn = true;

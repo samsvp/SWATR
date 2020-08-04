@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Hostage : NPC
@@ -37,7 +38,7 @@ public class Hostage : NPC
     {
         base.Start();
 
-        isPerformingAction = true;
+        isPerformingAction = false;
         turnsLeft = maxTurnsLeft;
 
         captiveSprite = render.sprite;
@@ -134,7 +135,7 @@ public class Hostage : NPC
 
     public bool IsHostageSaved()
     {
-        if (enemies.TrueForAll(e => e.alive)) return false;
+        if (enemies.Any(e => e.alive)) return false;
         SaveHostage();
         return true;
     }
@@ -142,6 +143,8 @@ public class Hostage : NPC
 
     public void SaveHostage()
     {
+        if (isDead) return;
+
         isSaved = true;
         isDead = false;
         savedOnTurn = GameManager.instance.turns;
