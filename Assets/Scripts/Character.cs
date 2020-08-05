@@ -144,12 +144,16 @@ public class Character : MonoBehaviour
     protected virtual void BreakWindow()
     {
         bc2D.enabled = false;
-        RaycastHit2D _hit = Physics2D.Raycast(transform.position, transform.up);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, transform.up);
         bc2D.enabled = true;
 
-        if (_hit.transform != null)
-            if (_hit.collider.name.Contains("Window"))
-                _hit.collider.GetComponent<Window>().Break();
+        foreach (var hit in hits)
+        {
+            if (hit.collider.name.Contains("Window"))
+                hit.collider.GetComponent<Window>().Break();
+            else break;
+        }
+                    
     }
 
 

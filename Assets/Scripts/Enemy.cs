@@ -70,9 +70,6 @@ public class Enemy : NPC
     /// <param name="turn"></param>
     public override void Rewind(int turn)
     {
-        print(turn);
-        print(pastMovements.Count);
-        print(name + transform.parent.name);
         transform.position = pastMovements[turn];
         transform.localEulerAngles = pastOrientations[turn];
 
@@ -119,7 +116,6 @@ public class Enemy : NPC
         bc2D.enabled = false;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, Mathf.Infinity,
             Player.instance.highlightMask, -Mathf.Infinity, Mathf.Infinity);
-        RaycastHit2D _hit = Physics2D.Raycast(transform.position, transform.up);
         bc2D.enabled = true;
         
         return hit;
