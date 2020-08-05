@@ -184,4 +184,15 @@ public class Hostage : NPC
         isDead = true;
         isSaved = false;
     }
+
+
+    public override void ClearTurns()
+    {
+        isDead = false;
+
+        turnsLeft = maxTurnsLeft;
+        UpdateTurnsLeftGUI(maxTurnsLeft);
+        
+        base.ClearTurns();
+    }
 }

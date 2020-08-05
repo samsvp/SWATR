@@ -44,6 +44,18 @@ public abstract class NPC : Character
     }
 
 
+    public override void ClearTurns()
+    {
+        base.ClearTurns();
+
+        aliveTurns.Clear();
+        aliveTurns.Add(true);
+
+        knockedOutTurns.Clear();
+        knockedOutTurns.Add(false);
+    }
+
+
     public abstract void ChooseAction();
 
     public abstract void MoveNPC();

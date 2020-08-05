@@ -173,4 +173,14 @@ public class Character : MonoBehaviour
         yield return null;
         animator.enabled = false;
     }
+
+
+    public virtual void ClearTurns()
+    {
+        pastMovements.Clear();
+        pastOrientations.Clear();
+
+        pastMovements.Add(transform.position);
+        pastOrientations.Add(transform.localEulerAngles);
+    }
 }

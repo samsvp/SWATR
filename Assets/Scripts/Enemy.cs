@@ -146,4 +146,13 @@ public class Enemy : NPC
         GameManager.instance.AllHostagesSaved();
     }
 
+
+    public override void ClearTurns()
+    {
+        base.ClearTurns();
+
+        pastMovementIndexes.Clear();
+        nextMovementIndex = 0;
+    }
+
 }
