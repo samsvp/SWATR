@@ -56,13 +56,7 @@ public class NextFloor : MonoBehaviour
     private IEnumerator Teleport()
     {
         yield return new WaitWhile(() => Player.instance.isPerformingAction);
-
-        GameManager.instance.turns = 0;
-
-        foreach (var h in nextFloorHostages) h.ClearTurns();
-        foreach (var e in nextFloorEnemies) e.ClearTurns();
-
-        Player.instance.ClearTurns();         
+     
         Player.instance.transform.position = nextFloorPosition;
         Destroy(gameObject);
     }

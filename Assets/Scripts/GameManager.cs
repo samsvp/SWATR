@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine(ChooseNPCsAction());
     }
 
+
     // Called by each new NPC and familiar created
     public void AddNPCToList(NPC script)
     {
@@ -96,6 +97,7 @@ public class GameManager : MonoBehaviour
 
         yield return null;
         yield return new WaitWhile(() => NPCs.Any((npc) => npc.isPerformingAction));
+        yield return null;
         
         NPCsMoving = false;
         playersTurn = true;

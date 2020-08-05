@@ -9,11 +9,17 @@ public abstract class NPC : Character
     protected List<bool> aliveTurns = new List<bool>() { true };
     protected List<bool> knockedOutTurns = new List<bool>() { false };
 
+    protected Vector3 initialPosition;
+    protected Vector3 initialRotation;
+
     // Use this for initialization
     protected override void Start()
     {
         GameManager.instance.AddNPCToList(this); // Add this enemy to the list of enemies
         base.Start();
+
+        initialPosition = transform.position;
+        initialRotation = transform.localEulerAngles;
     }
 
     public virtual void KnockOut()
@@ -46,7 +52,11 @@ public abstract class NPC : Character
 
     public override void ClearTurns()
     {
-        base.ClearTurns();
+        pastMovements.Clear();
+        pastOrientations.Clear();
+
+        pastMovements.Add(initialPosition);
+        pastOrientations.Add(initialRotation);
 
         aliveTurns.Clear();
         aliveTurns.Add(true);

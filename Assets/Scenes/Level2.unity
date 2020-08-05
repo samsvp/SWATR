@@ -10446,7 +10446,7 @@ PrefabInstance:
     - target: {fileID: 2985456819384357981, guid: fbde434620c4aa248b3a0285e1690f79,
         type: 3}
       propertyPath: maxTurnsLeft
-      value: 12
+      value: 82
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbde434620c4aa248b3a0285e1690f79, type: 3}
@@ -11903,7 +11903,7 @@ PrefabInstance:
     - target: {fileID: 2985456819384357981, guid: fbde434620c4aa248b3a0285e1690f79,
         type: 3}
       propertyPath: maxTurnsLeft
-      value: 18
+      value: 88
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbde434620c4aa248b3a0285e1690f79, type: 3}

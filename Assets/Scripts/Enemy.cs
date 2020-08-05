@@ -70,8 +70,16 @@ public class Enemy : NPC
     /// <param name="turn"></param>
     public override void Rewind(int turn)
     {
-        transform.position = pastMovements[turn];
-        transform.localEulerAngles = pastOrientations[turn];
+        if (turn < pastMovements.Count)
+        {
+            transform.position = pastMovements[turn];
+            transform.localEulerAngles = pastOrientations[turn];
+        }
+        else
+        {
+            Rewind(turn - 1);
+            return;
+        }
 
         // Movement
         if (turn != GameManager.instance.turns) nextMovementIndex = pastMovementIndexes[turn];
@@ -145,10 +153,10 @@ public class Enemy : NPC
 
     public override void ClearTurns()
     {
-        base.ClearTurns();
-
         pastMovementIndexes.Clear();
         nextMovementIndex = 0;
+
+        base.ClearTurns();
     }
 
 }
