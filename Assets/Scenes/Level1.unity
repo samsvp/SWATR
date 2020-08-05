@@ -12064,6 +12064,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2985456819384357979, guid: fbde434620c4aa248b3a0285e1690f79,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 8995221686095879057, guid: 7ab3d8a814898de4ab99dd09a432f93f,
+        type: 3}
     - target: {fileID: 2985456819384357981, guid: fbde434620c4aa248b3a0285e1690f79,
         type: 3}
       propertyPath: enemies.Array.size
@@ -12084,6 +12090,18 @@ PrefabInstance:
       propertyPath: maxTurnsLeft
       value: 18
       objectReference: {fileID: 0}
+    - target: {fileID: 2985456819384357981, guid: fbde434620c4aa248b3a0285e1690f79,
+        type: 3}
+      propertyPath: deadSprite
+      value: 
+      objectReference: {fileID: -5062049272639849725, guid: f8ebaf64902f784429fb268fec160722,
+        type: 3}
+    - target: {fileID: 2985456819384357981, guid: fbde434620c4aa248b3a0285e1690f79,
+        type: 3}
+      propertyPath: savedSprite
+      value: 
+      objectReference: {fileID: -4278410734498851364, guid: 634a2e1bdef7d434480f9d8a5121f8b7,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbde434620c4aa248b3a0285e1690f79, type: 3}
 --- !u!1001 &774909834
@@ -20657,6 +20675,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 2985456819384357979, guid: fbde434620c4aa248b3a0285e1690f79,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 4139316623502106688, guid: 7ab3d8a814898de4ab99dd09a432f93f,
+        type: 3}
     - target: {fileID: 2985456819384357981, guid: fbde434620c4aa248b3a0285e1690f79,
         type: 3}
       propertyPath: enemies.Array.size
@@ -20677,6 +20701,18 @@ PrefabInstance:
       propertyPath: maxTurnsLeft
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 2985456819384357981, guid: fbde434620c4aa248b3a0285e1690f79,
+        type: 3}
+      propertyPath: savedSprite
+      value: 
+      objectReference: {fileID: 5033324109241816162, guid: 634a2e1bdef7d434480f9d8a5121f8b7,
+        type: 3}
+    - target: {fileID: 2985456819384357981, guid: fbde434620c4aa248b3a0285e1690f79,
+        type: 3}
+      propertyPath: deadSprite
+      value: 
+      objectReference: {fileID: -6482050948948891959, guid: f8ebaf64902f784429fb268fec160722,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbde434620c4aa248b3a0285e1690f79, type: 3}
 --- !u!4 &2135140639 stripped

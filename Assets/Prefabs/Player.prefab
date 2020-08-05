@@ -171,9 +171,8 @@ MonoBehaviour:
   knockedOut: 0
   x: 0
   y: 0
-  rewindTurns: 5
-  rewindsLeft: 5
-  rewindLimit: 5
+  rewindsLeft: 3
+  rewindLimit: 8
   rewindsLeftText: {fileID: 0}
   gunAmmo: 10
   gunAmmoText: {fileID: 0}
