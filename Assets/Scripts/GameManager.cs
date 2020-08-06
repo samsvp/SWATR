@@ -66,7 +66,9 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (wait || NPCsMoving)
-            if (Player.instance.turnButton.activeSelf && Input.GetMouseButtonDown(1)) Player.instance.Rewind();
+            if (Player.instance.turnButton.activeSelf && (Input.GetMouseButtonDown(1) 
+                                                        || Input.GetKeyDown(KeyCode.LeftControl)))
+                Player.instance.Rewind();
             else return;
         else if (playersTurn)
             Player.instance.GetInput();

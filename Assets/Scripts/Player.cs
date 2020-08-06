@@ -129,7 +129,7 @@ public class Player : Character
         // Pass the horizontal and vertical direction that the player is moving. The <Wall> parameter means that
         // the player might interact with a wall when moving
         if (x != 0 || y != 0) Move(x, y);
-        else if (Input.GetMouseButtonDown(0))
+        else if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
             switch (weapon)
             {
@@ -146,7 +146,7 @@ public class Player : Character
                     break;
             }
         }
-        else if (Input.GetMouseButtonDown(1)) Rewind();
+        else if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.LeftControl)) Rewind();
         else
         {
             animator.enabled = false;
