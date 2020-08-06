@@ -38,6 +38,13 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public int grenadeCountdown;
 
+    // Checks for level completion
+    private bool allHostagesSaved = false;
+    private bool allEnemiesSecured = false;
+
+    private GameObject restartGUI;
+    private GameObject levelCompletedGUI;
+
     public bool Wait
     {
         get
@@ -60,7 +67,17 @@ public class GameManager : MonoBehaviour
         NPCs = new List<NPC>();
         grenadeCountdown = 2;
     }
-    
+
+
+    private void Start()
+    {
+        restartGUI = GameObject.FindGameObjectWithTag("RestartCanvas");
+        levelCompletedGUI = GameObject.FindGameObjectWithTag("LevelCompleted");
+
+        restartGUI.SetActive(false);
+        levelCompletedGUI.SetActive(false);
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -130,9 +147,90 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public bool AllHostagesSaved()
+    public void AllHostagesSaved()
     {
-        return NPCs.Where(NPC => NPC is Hostage).All(npc => ((Hostage)npc).IsHostageSaved());
+        allHostagesSaved = NPCs.Where(NPC => NPC is Hostage).All(npc => ((Hostage)npc).IsHostageSaved());
+        LevelCompleted();
+    }
+
+
+    public void AllEnemiesSecured()
+    {
+        allEnemiesSecured = NPCs.Where(NPC => NPC is Enemy).All(npc => !npc.alive);
+        LevelCompleted();
+    }
+
+
+    private void LevelCompleted()
+    {
+        if (allEnemiesSecured && allHostagesSaved)
+        {
+            levelCompletedGUI.SetActive(true);
+
+            if (SceneManager.GetActiveScene().name != "Level4") DisplayScore();
+            else DisplayLvl4Score();
+
+            StartCoroutine(GoToNextLevel());
+        }
+    }
+
+
+    private void DisplayScore()
+    {
+        List<Enemy> enemies = NPCs.Where(npc => npc is Enemy).Cast<Enemy>().ToList();
+        List<Hostage> hostages = NPCs.Where(npc => npc is Hostage).Cast<Hostage>().ToList();
+
+        int enemiesKnockedOut = enemies.Where(enemy => enemy.knockedOut).Count();
+        int score = (int)Mathf.Floor(enemiesKnockedOut / (float)enemies.Count * 50) + 50;
+
+        var levelCompletedGUIText = levelCompletedGUI.transform.GetChild(0).gameObject.GetComponent<Text>();
+        levelCompletedGUIText.text = "Level completed!\n\nScore: " + score +
+            "\nKnocked Out enemies: " + enemiesKnockedOut + "/" + enemies.Count +
+            "\nHostages Saved: " + hostages.Count + "/" + hostages.Count +
+            "\n\nPress space or left mouse to continue!";
+
+    }
+
+
+    private void DisplayLvl4Score()
+    {
+        List<Enemy> enemies = NPCs.Where(npc => npc is Enemy).Cast<Enemy>().ToList();
+        int enemiesKnockedOut = enemies.Where(enemy => enemy.knockedOut).Count();
+
+        int score;
+        if (enemies.Count - enemiesKnockedOut <= 3) score = 100;
+        else score = (int)Mathf.Floor(enemiesKnockedOut / (float)enemies.Count * 50) + 50;
+
+        var levelCompletedGUIText = levelCompletedGUI.transform.GetChild(0).gameObject.GetComponent<Text>();
+        levelCompletedGUIText.text = "Level completed!\n\nScore: " + score +
+            "\nKnocked Out enemies: " + enemiesKnockedOut + "/" + enemies.Count +
+            "\n\nPress space or left mouse to continue!";
+    }
+    
+
+    private IEnumerator GoToNextLevel()
+    {
+        AsyncOperation asyncLoad;
+
+        while (true)
+        {
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+            {
+                asyncLoad = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
+
+                while (!asyncLoad.isDone)
+                {
+                    yield return null;
+                }
+            }
+            yield return null;
+        }
+    }
+    
+
+    public void EnableRestartGUI()
+    {
+        restartGUI.SetActive(true);
     }
 
 

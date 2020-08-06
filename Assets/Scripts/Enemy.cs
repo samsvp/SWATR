@@ -140,6 +140,7 @@ public class Enemy : NPC
     protected override IEnumerator CTakeDamage()
     {
         yield return StartCoroutine(base.CTakeDamage());
+        GameManager.instance.AllEnemiesSecured();
         GameManager.instance.AllHostagesSaved();
     }
 
@@ -148,6 +149,7 @@ public class Enemy : NPC
     {
         yield return StartCoroutine(base.CTaserKnockOut());
         render.sprite = knockedOutSprite;
+        GameManager.instance.AllEnemiesSecured();
         GameManager.instance.AllHostagesSaved();
     }
 

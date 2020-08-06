@@ -420,7 +420,8 @@ public class Player : Character
         yield return StartCoroutine(base.CTakeDamage());
 
         highlight.SetActive(false);
-        print("wasted");
+        GameManager.instance.EnableRestartGUI();
+        
         while (true)
         {
             if (Input.GetKeyDown(KeyCode.R)) ReloadScene.Reload();
