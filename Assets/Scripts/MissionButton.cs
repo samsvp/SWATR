@@ -6,9 +6,24 @@ using UnityEngine.SceneManagement;
 public class MissionButton : MonoBehaviour
 {
 
+    public void NewGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void LoadGame()
+    {
+        SceneManager.LoadScene(SaveManager.currentLevel);
+    }
+
     public void StartMission()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 
     public void PointerEnter()

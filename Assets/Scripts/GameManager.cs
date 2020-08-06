@@ -170,6 +170,7 @@ public class GameManager : MonoBehaviour
             if (SceneManager.GetActiveScene().name != "Level4") DisplayScore();
             else DisplayLvl4Score();
 
+            SaveManager.Save(SceneManager.GetActiveScene().buildIndex + 1);
             StartCoroutine(GoToNextLevel());
         }
     }
