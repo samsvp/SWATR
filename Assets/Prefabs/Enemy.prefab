@@ -164,10 +164,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5944f5374615bc745a32879f389427e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveTime: 0.05
+  moveTime: 0.2
   isPerformingAction: 0
   alive: 1
   knockedOut: 0
+  mDeadSprite: {fileID: 1445799458632272015, guid: 6d13d50771621d94f90b451e3cd78074,
+    type: 3}
   movement:
   - {x: 0, y: 1}
   - {x: 0, y: 1}
@@ -179,3 +181,5 @@ MonoBehaviour:
   - {x: 1, y: 0}
   - {x: 1, y: 0}
   - {x: 0, y: 1}
+  knockedOutSprite: {fileID: -2997628259224032760, guid: 6010d51f6ce4d4b42b6214d310e4129b,
+    type: 3}

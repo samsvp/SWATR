@@ -10,6 +10,9 @@ public class Enemy : NPC
     private List<int> pastMovementIndexes = new List<int>();
     private int nextMovementIndex = 0;
 
+    [SerializeField]
+    private Sprite knockedOutSprite;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -37,10 +40,7 @@ public class Enemy : NPC
         RaycastHit2D hit = RShoot();
 
         if (hit.transform == null) MoveNPC();
-        else if (hit.transform.CompareTag("Player"))
-        {
-            Shoot();
-        }
+        else if (hit.transform.CompareTag("Player")) Shoot();
         else MoveNPC();
     }
 
@@ -147,6 +147,7 @@ public class Enemy : NPC
     protected override IEnumerator CTaserKnockOut()
     {
         yield return StartCoroutine(base.CTaserKnockOut());
+        render.sprite = knockedOutSprite;
         GameManager.instance.AllHostagesSaved();
     }
 

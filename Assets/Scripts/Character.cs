@@ -34,6 +34,9 @@ public class Character : MonoBehaviour
     public bool alive = true;
     public bool knockedOut = false;
 
+    [SerializeField]
+    protected Sprite mDeadSprite;
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -94,14 +97,15 @@ public class Character : MonoBehaviour
 
         Vector3 target = new Vector3((int)end.x, (int)end.y);
         float sqrRemainingDistance = (transform.position - target).sqrMagnitude;
-        while (sqrRemainingDistance > 0.05f)
+        while (sqrRemainingDistance > 0.0001f)
         {
             // Move towards the positon we want
-            Vector3 newPosition = Vector3.MoveTowards(rb2D.position, target, inverseMoveTime * Time.deltaTime);
+            Vector3 newPosition = Vector3.MoveTowards(rb2D.position, target, inverseMoveTime * Time.fixedDeltaTime);
             rb2D.MovePosition(newPosition);
             sqrRemainingDistance = (transform.position - target).sqrMagnitude;
-            yield return null; // Wait for a frame before continuing the loop
+            yield return new WaitForFixedUpdate(); // Wait for fixed update before continuing the loop
         }
+        yield return null;
         transform.position = target;
 
         isPerformingAction = false;
@@ -176,6 +180,7 @@ public class Character : MonoBehaviour
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f);
         yield return null;
         animator.enabled = false;
+        render.sprite = mDeadSprite;
     }
 
 

@@ -99,13 +99,11 @@ public class GameManager : MonoBehaviour
 
         yield return null;
         yield return new WaitWhile(() => NPCs.Any((npc) => npc.isPerformingAction));
-        yield return null;
         
         NPCsMoving = false;
         playersTurn = true;
         // Wait one frame due a bug when entering doors
         wait = true;
-        yield return null;
         wait = false;
     }
 
