@@ -42,8 +42,12 @@ public class GameManager : MonoBehaviour
     private bool allHostagesSaved = false;
     private bool allEnemiesSecured = false;
 
+    // GUI
     private GameObject restartGUI;
     private GameObject levelCompletedGUI;
+
+    // Audio
+    private AudioSource audioSource;
 
     public bool Wait
     {
@@ -76,6 +80,8 @@ public class GameManager : MonoBehaviour
 
         restartGUI.SetActive(false);
         levelCompletedGUI.SetActive(false);
+
+        audioSource = GetComponent<AudioSource>();
     }
 
 
@@ -228,6 +234,12 @@ public class GameManager : MonoBehaviour
         }
     }
     
+
+    public void PlayClip(AudioClip clip)
+    {
+
+    }
+
 
     public void EnableRestartGUI()
     {

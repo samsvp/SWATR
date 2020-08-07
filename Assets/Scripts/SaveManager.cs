@@ -25,6 +25,7 @@ public class SaveManager : MonoBehaviour
 
     public static void Save(int level)
     {
+        print(path);
         System.IO.File.WriteAllText(path, level.ToString());
     }
 

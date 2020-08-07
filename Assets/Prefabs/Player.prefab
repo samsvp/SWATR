@@ -173,6 +173,8 @@ MonoBehaviour:
   knockedOut: 0
   mDeadSprite: {fileID: -198236570846542600, guid: 8e024d7f27f04e9409828caf58eaab04,
     type: 3}
+  shotgunClip: {fileID: 8300000, guid: fc454896c763bb5409279bc16b140b64, type: 3}
+  deathClip: {fileID: 8300000, guid: d9156722ab186174b9ab56808d7dc1b1, type: 3}
   x: 0
   y: 0
   rewindsLeft: 3
@@ -201,6 +203,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   grenade: {fileID: 4659043951440811489, guid: caacc3fb758cd9844be4d470ac70a4d7, type: 3}
+  taserClip: {fileID: 8300000, guid: 34216d0ae7330d14f80ea2a9e3ef97f9, type: 3}
+  grenadeClip: {fileID: 8300000, guid: d8d394fbba9469e4094be2d2106ab3d7, type: 3}
 --- !u!82 &2984560010014709014
 AudioSource:
   m_ObjectHideFlags: 0
@@ -212,7 +216,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

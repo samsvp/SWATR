@@ -13,6 +13,9 @@ public class Enemy : NPC
     [SerializeField]
     private Sprite knockedOutSprite;
 
+    [SerializeField]
+    protected AudioClip knockedOutClip;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -130,9 +133,9 @@ public class Enemy : NPC
     }
 
 
-    protected override IEnumerator CShoot()
+    protected override IEnumerator CShoot(AudioClip clip)
     {
-        yield return StartCoroutine(base.CShoot());
+        yield return StartCoroutine(base.CShoot(clip));
         if (alive) Player.instance.SendMessage("TakeDamage");
     }
 
@@ -147,6 +150,9 @@ public class Enemy : NPC
 
     protected override IEnumerator CTaserKnockOut()
     {
+        audioSource.clip = knockedOutClip;
+        audioSource.Play();
+
         yield return StartCoroutine(base.CTaserKnockOut());
         render.sprite = knockedOutSprite;
         GameManager.instance.AllEnemiesSecured();

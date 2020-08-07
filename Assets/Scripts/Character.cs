@@ -37,6 +37,14 @@ public class Character : MonoBehaviour
     [SerializeField]
     protected Sprite mDeadSprite;
 
+    // Audio
+    protected AudioSource audioSource;
+    [SerializeField]
+    protected AudioClip shotgunClip;
+    [SerializeField]
+    protected AudioClip deathClip;
+
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -44,6 +52,8 @@ public class Character : MonoBehaviour
         rb2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         render = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
+
         sprite = render.sprite;
 
         pastMovements.Add(transform.position);
@@ -125,14 +135,28 @@ public class Character : MonoBehaviour
 
         isPerformingAction = true;
         BreakWindow();
-        StartCoroutine(CShoot());
+        StartCoroutine(CShoot(shotgunClip));
     }
 
 
-    protected virtual IEnumerator CShoot()
+    public virtual void Shoot(AudioClip clip)
+    {
+        if (!alive) return;
+
+        isPerformingAction = true;
+        BreakWindow();
+        StartCoroutine(CShoot(clip));
+    }
+
+
+    protected virtual IEnumerator CShoot(AudioClip clip)
     {
         animator.enabled = true;
         animator.SetBool("Shoot", true);
+
+        audioSource.clip = clip;
+        audioSource.Play();
+
         yield return null;
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f);
         animator.SetBool("Shoot", false);
@@ -176,6 +200,10 @@ public class Character : MonoBehaviour
     {
         animator.enabled = true;
         animator.SetBool("Death", true);
+
+        audioSource.clip = deathClip;
+        audioSource.Play();
+
         yield return null;
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f);
         yield return null;

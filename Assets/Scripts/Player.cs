@@ -77,6 +77,12 @@ public class Player : Character
     private GameObject grenade;
     private GameObject highlight;
 
+    // Audio
+    [SerializeField]
+    protected AudioClip taserClip;
+    [SerializeField]
+    protected AudioClip grenadeClip;
+
     void Awake()
     {
         if (instance == null) instance = this;
@@ -340,9 +346,9 @@ public class Player : Character
     }
 
 
-    protected override IEnumerator CShoot()
+    protected override IEnumerator CShoot(AudioClip clip)
     {
-        yield return StartCoroutine(base.CShoot());
+        yield return StartCoroutine(base.CShoot(clip));
         GameManager.instance.playersTurn = false;
     }
 
@@ -370,7 +376,7 @@ public class Player : Character
         // Wait a frame for the transition to take place
         yield return null;
 
-        Shoot();
+        Shoot(taserClip);
 
         pastMovements.Add(transform.position);
         pastOrientations.Add(transform.localEulerAngles);
@@ -402,7 +408,7 @@ public class Player : Character
         yield return null;
 
         isPerformingAction = true;
-        yield return StartCoroutine(CShoot());
+        yield return StartCoroutine(CShoot(grenadeClip));
 
         pastMovements.Add(transform.position);
         pastOrientations.Add(transform.localEulerAngles);

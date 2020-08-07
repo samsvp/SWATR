@@ -32,6 +32,8 @@ public class Hostage : NPC
     private TextMesh textMesh;
     private TextMesh outline;
 
+    [SerializeField]
+    private AudioClip savedClip;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -55,6 +57,10 @@ public class Hostage : NPC
         
     }
 
+    void LateUpdate()
+    {
+        if (turnsLeft == -1) IsHostageSaved();
+    }
 
     public override void ChooseAction()
     {
@@ -143,10 +149,14 @@ public class Hostage : NPC
 
     public void SaveHostage()
     {
-        if (isDead) return;
+        if ((isDead && turnsLeft < -1) || isSaved) return;
 
         isSaved = true;
         isDead = false;
+
+        audioSource.clip = savedClip;
+        audioSource.Play();
+
         savedOnTurn = GameManager.instance.turns;
         UpdateTurnsLeftGUI(savedOnTurn);
     }
