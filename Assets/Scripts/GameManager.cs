@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
     private List<NPC> NPCs;
     private bool NPCsMoving;
 
+    [SerializeField]
+    private Enemy boss;
+
     // How many turns have passed
     public int turns = 0;
     [SerializeField]
@@ -169,12 +172,20 @@ public class GameManager : MonoBehaviour
 
     private void LevelCompleted()
     {
-        if (allEnemiesSecured && allHostagesSaved)
+        if (SceneManager.GetActiveScene().name == "Level4" && !boss.alive)
         {
             levelCompletedGUI.SetActive(true);
 
-            if (SceneManager.GetActiveScene().name != "Level4") DisplayScore();
-            else DisplayLvl4Score();
+            DisplayLvl4Score();
+
+            SaveManager.Save(SceneManager.GetActiveScene().buildIndex + 1);
+            StartCoroutine(GoToNextLevel());
+        }
+        else if (allEnemiesSecured && allHostagesSaved)
+        {
+            levelCompletedGUI.SetActive(true);
+
+            DisplayScore();
 
             SaveManager.Save(SceneManager.GetActiveScene().buildIndex + 1);
             StartCoroutine(GoToNextLevel());
@@ -194,8 +205,8 @@ public class GameManager : MonoBehaviour
         levelCompletedGUIText.text = "Level completed!\n\nScore: " + score +
             "\nKnocked Out enemies: " + enemiesKnockedOut + "/" + enemies.Count +
             "\nHostages Saved: " + hostages.Count + "/" + hostages.Count +
+            "\nTurns: " + turns +
             "\n\nPress space or left mouse to continue!";
-
     }
 
 
@@ -203,20 +214,24 @@ public class GameManager : MonoBehaviour
     {
         List<Enemy> enemies = NPCs.Where(npc => npc is Enemy).Cast<Enemy>().ToList();
         int enemiesKnockedOut = enemies.Where(enemy => enemy.knockedOut).Count();
-
+        int enemiesKilled = enemies.Where(enemy => !enemy.knockedOut && !enemy.alive).Count();
+        
         int score;
-        if (enemies.Count - enemiesKnockedOut <= 3) score = 100;
+        if (enemiesKilled <= 3) score = 100;
         else score = (int)Mathf.Floor(enemiesKnockedOut / (float)enemies.Count * 50) + 50;
 
         var levelCompletedGUIText = levelCompletedGUI.transform.GetChild(0).gameObject.GetComponent<Text>();
         levelCompletedGUIText.text = "Level completed!\n\nScore: " + score +
             "\nKnocked Out enemies: " + enemiesKnockedOut + "/" + enemies.Count +
+            "\nTurns: " + turns +
             "\n\nPress space or left mouse to continue!";
     }
     
 
     private IEnumerator GoToNextLevel()
     {
+        wait = true;
+
         AsyncOperation asyncLoad;
 
         while (true)

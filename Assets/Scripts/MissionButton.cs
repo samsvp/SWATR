@@ -16,6 +16,11 @@ public class MissionButton : MonoBehaviour
         SceneManager.LoadScene(SaveManager.currentLevel);
     }
 
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     public void StartMission()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);

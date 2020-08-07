@@ -14,6 +14,7 @@ public class Window : MonoBehaviour
     {
         if (isBreaked) return;
 
+        GetComponent<AudioSource>().Play();
         GetComponent<SpriteRenderer>().sprite = breakedSprite;
         isBreaked = true;
     }

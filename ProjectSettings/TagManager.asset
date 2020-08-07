@@ -8,6 +8,7 @@ TagManager:
   - RestartCanvas
   - Hostage
   - LevelCompleted
+  - Boss
   layers:
   - Default
   - TransparentFX
