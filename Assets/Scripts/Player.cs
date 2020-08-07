@@ -69,6 +69,14 @@ public class Player : Character
     };
 
     private Weapon weapon = Weapon.gun;
+
+    // Weapon Select
+    [SerializeField]
+    private GameObject gunSelected;
+    [SerializeField]
+    private GameObject taserSelected;
+    [SerializeField]
+    private GameObject grenadeSelected;
     
     public LayerMask highlightMask;
 
@@ -170,6 +178,9 @@ public class Player : Character
             animator.SetBool("Taser", false);
             animator.SetBool("Grenade", false);
             highlight.SetActive(false);
+            gunSelected.SetActive(true);
+            taserSelected.SetActive(false);
+            grenadeSelected.SetActive(false);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -178,6 +189,9 @@ public class Player : Character
             animator.SetBool("Taser", true);
             animator.SetBool("Grenade", false);
             highlight.SetActive(false);
+            gunSelected.SetActive(false);
+            taserSelected.SetActive(true);
+            grenadeSelected.SetActive(false);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
@@ -185,6 +199,9 @@ public class Player : Character
             sprite = grenadeSprite;
             animator.SetBool("Taser", false);
             animator.SetBool("Grenade", true);
+            gunSelected.SetActive(false);
+            taserSelected.SetActive(false);
+            grenadeSelected.SetActive(true);
             GrenadePosition();
         }
     }

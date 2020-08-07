@@ -298,11 +298,22 @@ PrefabInstance:
         Art:
         CrimsomKing
 
-        Sound Effects:  https://freesound.org/
+        Sound Effects taken from https://freesound.org/
+
+        Made
+        by the following users:
+
+        Leszek_Szary
+
+        LeMudCrab
+
+        Owly
+        Bee
+
+        Replyx
 
 
-        Thanks
-        for playing!'
+        Thanks for playing!'
       objectReference: {fileID: 0}
     - target: {fileID: 8719151073320800323, guid: 19cacdc3ce29683479003f862408296f,
         type: 3}

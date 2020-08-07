@@ -255,6 +255,12 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &17433837 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6892143252558078442, guid: ada03972e28e800428ef410534340d6d,
+    type: 3}
+  m_PrefabInstance: {fileID: 280221307}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &48959762
 GameObject:
   m_ObjectHideFlags: 0
@@ -9845,6 +9851,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a026539bd9610d4d83dddaf88c904b8, type: 3}
+--- !u!1 &214751471 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9106479826038089109, guid: ada03972e28e800428ef410534340d6d,
+    type: 3}
+  m_PrefabInstance: {fileID: 280221307}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &243952036
 GameObject:
   m_ObjectHideFlags: 0
@@ -10072,7 +10084,7 @@ PrefabInstance:
     - target: {fileID: 1059706207668316080, guid: ada03972e28e800428ef410534340d6d,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00015258789
+      value: 0.00012207031
       objectReference: {fileID: 0}
     - target: {fileID: 3806443697289542532, guid: ada03972e28e800428ef410534340d6d,
         type: 3}
@@ -10996,6 +11008,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a026539bd9610d4d83dddaf88c904b8, type: 3}
+--- !u!1 &489967611 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8334209712949888809, guid: ada03972e28e800428ef410534340d6d,
+    type: 3}
+  m_PrefabInstance: {fileID: 280221307}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &562886171
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16229,6 +16247,21 @@ PrefabInstance:
       propertyPath: rewindsLeft
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5076543942689869613, guid: ccab743cd2162a249983284e4d62e15b,
+        type: 3}
+      propertyPath: gunSelected
+      value: 
+      objectReference: {fileID: 17433837}
+    - target: {fileID: 5076543942689869613, guid: ccab743cd2162a249983284e4d62e15b,
+        type: 3}
+      propertyPath: taserSelected
+      value: 
+      objectReference: {fileID: 489967611}
+    - target: {fileID: 5076543942689869613, guid: ccab743cd2162a249983284e4d62e15b,
+        type: 3}
+      propertyPath: grenadeSelected
+      value: 
+      objectReference: {fileID: 214751471}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccab743cd2162a249983284e4d62e15b, type: 3}
 --- !u!1 &1513495783

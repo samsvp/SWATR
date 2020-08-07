@@ -43,7 +43,7 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 11
+  serializedVersion: 12
   m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
@@ -98,7 +98,8 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 03ce4ccc2aafa5f458a2c23ac23d0aa7,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -118,6 +119,8 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
+    maxJobWorkers: 0
+    preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
@@ -711,6 +714,7 @@ TilemapRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3566,6 +3570,7 @@ TilemapRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3965,6 +3970,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &637050390 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9106479826038089109, guid: ada03972e28e800428ef410534340d6d,
+    type: 3}
+  m_PrefabInstance: {fileID: 637050381}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &637050391 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8334209712949888809, guid: ada03972e28e800428ef410534340d6d,
+    type: 3}
+  m_PrefabInstance: {fileID: 637050381}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &637050392 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6892143252558078442, guid: ada03972e28e800428ef410534340d6d,
+    type: 3}
+  m_PrefabInstance: {fileID: 637050381}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &687486853
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4299,6 +4322,7 @@ TilemapRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9276,6 +9300,7 @@ TilemapRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -13028,6 +13053,21 @@ PrefabInstance:
       propertyPath: rewindLimit
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 5076543942689869613, guid: ccab743cd2162a249983284e4d62e15b,
+        type: 3}
+      propertyPath: gunSelected
+      value: 
+      objectReference: {fileID: 637050392}
+    - target: {fileID: 5076543942689869613, guid: ccab743cd2162a249983284e4d62e15b,
+        type: 3}
+      propertyPath: taserSelected
+      value: 
+      objectReference: {fileID: 637050391}
+    - target: {fileID: 5076543942689869613, guid: ccab743cd2162a249983284e4d62e15b,
+        type: 3}
+      propertyPath: grenadeSelected
+      value: 
+      objectReference: {fileID: 637050390}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccab743cd2162a249983284e4d62e15b, type: 3}
 --- !u!114 &906138658 stripped
@@ -13229,6 +13269,7 @@ TilemapRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -15082,6 +15123,7 @@ TilemapRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -25389,6 +25431,7 @@ TilemapRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -25916,6 +25959,7 @@ TilemapRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -26289,6 +26333,7 @@ TilemapRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -26819,6 +26864,7 @@ TilemapRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -27070,6 +27116,7 @@ TilemapRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -39995,6 +40042,7 @@ TilemapRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
