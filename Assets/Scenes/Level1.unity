@@ -16767,6 +16767,21 @@ PrefabInstance:
       propertyPath: turnsText
       value: 
       objectReference: {fileID: 1663384356}
+    - target: {fileID: 7111902180129512989, guid: 5cdd4351a8ac32240856be405a682811,
+        type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111902180129512989, guid: 5cdd4351a8ac32240856be405a682811,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111902180129512989, guid: 5cdd4351a8ac32240856be405a682811,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c897bdc558c6c9c4395114c4f5f381ba, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cdd4351a8ac32240856be405a682811, type: 3}
 --- !u!4 &1624833025 stripped

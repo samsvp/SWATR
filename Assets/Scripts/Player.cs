@@ -90,6 +90,8 @@ public class Player : Character
     protected AudioClip taserClip;
     [SerializeField]
     protected AudioClip grenadeClip;
+    [SerializeField]
+    protected AudioClip walkClip;
 
     void Awake()
     {
@@ -333,6 +335,9 @@ public class Player : Character
 
     protected override IEnumerator SmoothMovement(Vector3 end)
     {
+        audioSource.clip = walkClip;
+        audioSource.Play();
+
         yield return StartCoroutine(base.SmoothMovement(end));
         if (weapon == Weapon.grenade)
         {

@@ -199,12 +199,16 @@ MonoBehaviour:
     type: 3}
   grenadeSprite: {fileID: -5851877121197619488, guid: 7066edd29dfbf7f46ae8762067704903,
     type: 3}
+  gunSelected: {fileID: 0}
+  taserSelected: {fileID: 0}
+  grenadeSelected: {fileID: 0}
   highlightMask:
     serializedVersion: 2
     m_Bits: 55
   grenade: {fileID: 4659043951440811489, guid: caacc3fb758cd9844be4d470ac70a4d7, type: 3}
   taserClip: {fileID: 8300000, guid: 34216d0ae7330d14f80ea2a9e3ef97f9, type: 3}
   grenadeClip: {fileID: 8300000, guid: d8d394fbba9469e4094be2d2106ab3d7, type: 3}
+  walkClip: {fileID: 8300000, guid: 0947df76b8cfd904c938d866a22bb68f, type: 3}
 --- !u!82 &2984560010014709014
 AudioSource:
   m_ObjectHideFlags: 0
