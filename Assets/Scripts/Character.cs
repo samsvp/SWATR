@@ -30,9 +30,10 @@ public class Character : MonoBehaviour
     protected static Vector3 down = new Vector3(0, 0, 180);
 
     // Health
-    // [HideInInspector]
-    public bool alive = true;
-    public bool knockedOut = false;
+    [HideInInspector]
+    public bool isAlive = true;
+    [HideInInspector]
+    public bool isKnockedOut = false;
 
     [SerializeField]
     protected Sprite mDeadSprite;
@@ -71,7 +72,7 @@ public class Character : MonoBehaviour
 
     protected virtual bool Move(int xDir, int yDir)
     {
-        if (!alive)
+        if (!isAlive)
         {
             pastMovements.Add(transform.position);
             pastOrientations.Add(transform.localEulerAngles);
@@ -88,8 +89,7 @@ public class Character : MonoBehaviour
         if (hit.transform == null)
         {
             // Change transform rotation
-            if (xDir == 0) transform.localEulerAngles = yDir > 0 ? up : down;
-            else transform.localEulerAngles = xDir > 0 ? right : left;
+            transform.localEulerAngles = GetDirectionAngles(xDir, yDir);
 
             StartCoroutine(SmoothMovement(end));
             // Add to the list of past movements
@@ -101,9 +101,17 @@ public class Character : MonoBehaviour
     }
 
 
+    protected Vector3 GetDirectionAngles(int x, int y)
+    {
+        if (x == 0) return y > 0 ? up : down;
+        else return x > 0 ? right : left;
+    }
+
+
     protected virtual IEnumerator SmoothMovement(Vector3 end)
     {
         isPerformingAction = true;
+        bc2D.enabled = false;
 
         Vector3 target = new Vector3((int)end.x, (int)end.y);
         float sqrRemainingDistance = (transform.position - target).sqrMagnitude;
@@ -118,6 +126,7 @@ public class Character : MonoBehaviour
         yield return null;
         transform.position = target;
 
+        bc2D.enabled = true;
         isPerformingAction = false;
     }
 
@@ -131,7 +140,7 @@ public class Character : MonoBehaviour
 
     public virtual void Shoot()
     {
-        if (!alive) return;
+        if (!isAlive) return;
 
         isPerformingAction = true;
         BreakWindow();
@@ -141,7 +150,7 @@ public class Character : MonoBehaviour
 
     public virtual void Shoot(AudioClip clip)
     {
-        if (!alive) return;
+        if (!isAlive) return;
 
         isPerformingAction = true;
         BreakWindow();
@@ -191,7 +200,7 @@ public class Character : MonoBehaviour
         // through a rewind)
         bc2D.enabled = false;
         
-        alive = false;
+        isAlive = false;
         StartCoroutine(CTakeDamage());
     }
 

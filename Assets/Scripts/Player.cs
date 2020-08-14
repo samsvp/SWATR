@@ -125,7 +125,7 @@ public class Player : Character
 
     public void GetInput()
     {
-        if (!alive) return;
+        if (!isAlive) return;
         // Check if it's the players turn. If it's not then nothing will run
         if (!GameManager.instance.playersTurn || isPerformingAction) return;
 
@@ -364,7 +364,7 @@ public class Player : Character
         pastOrientations.Add(transform.localEulerAngles);
 
         if (hit.transform == null) return;
-        if (hit.transform.CompareTag("Enemy")) hit.transform.SendMessage("TakeDamage");
+        hit.transform.SendMessage("TakeDamage", SendMessageOptions.DontRequireReceiver);
     }
 
 
@@ -404,7 +404,7 @@ public class Player : Character
         pastOrientations.Add(transform.localEulerAngles);
 
         if (hit.transform == null) yield break;
-        if (hit.transform.CompareTag("Enemy")) hit.transform.SendMessage("TaserKnockOut");
+        hit.transform.SendMessage("TaserKnockOut", SendMessageOptions.DontRequireReceiver);
     }
 
 
@@ -448,6 +448,8 @@ public class Player : Character
         yield return StartCoroutine(base.CTakeDamage());
 
         highlight.SetActive(false);
+        bc2D.enabled = false;
+
         GameManager.instance.EnableRestartGUI();
         
         while (true)

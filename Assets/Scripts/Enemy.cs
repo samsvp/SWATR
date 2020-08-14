@@ -11,7 +11,18 @@ public class Enemy : NPC
     private int nextMovementIndex = 0;
 
     [SerializeField]
+    private Hostage hostage;
+    [SerializeField]
+    private Enemy enemyWithHostage;
+
+    private bool isAlert = false;
+    private List<bool> alertTurns = new List<bool>() { false };
+
+    [SerializeField]
     private Sprite knockedOutSprite;
+
+    private Action nextAction;
+    private Transform nextMovementArrow;
 
     [SerializeField]
     protected AudioClip knockedOutClip;
@@ -20,37 +31,76 @@ public class Enemy : NPC
     protected override void Start()
     {
         base.Start();
+
+        nextMovementArrow = transform.GetChild(0);
+        SetNextAction(MoveNPC);
     }
 
     // Update is called once per frame
     protected override void Update()
     {
-        
+
     }
 
 
     public override void ChooseAction()
     {
-        aliveTurns.Add(alive);
-        knockedOutTurns.Add(knockedOut);
+        aliveTurns.Add(isAlive);
+        alertTurns.Add(isAlert);
+        knockedOutTurns.Add(isKnockedOut);
 
-        if (!render.isVisible || !alive)
+        if (!render.isVisible || !isAlive)
         {
             MoveNPC();
             return;
         }
 
-        RaycastHit2D hit = RShoot();
+        nextAction();
+        SetNextAction(MoveNPC);
+    }
 
-        if (hit.transform == null) MoveNPC();
-        else if (hit.transform.CompareTag("Player")) Shoot();
-        else MoveNPC();
+
+    private void SetNextAction(Action action)
+    {
+        if (action == MoveNPC)
+        {
+            int nextIndex = (nextMovementIndex) % movement.Count;
+            Vector2 nextMovement = movement[nextIndex];
+            Vector3 angles = GetDirectionAngles((int)nextMovement.x, (int)nextMovement.y);
+            nextMovementArrow.eulerAngles = angles;
+        }
+        else if (action == Shoot)
+        {
+            print("Shoot");
+        }
+
+        nextAction = action;
+    }
+
+
+    public void SetAlert(bool alert=true)
+    {
+        isAlert = alert;
+
+        // Add the alert turn so that if the player rewind back to when an enemy is killed
+        // the last element of alertTurns is true
+        alertTurns.RemoveAt(0);
+        alertTurns.Add(isAlert);
+
+        if (isAlert) SetNextAction(Shoot);
+        else SetNextAction(MoveNPC);
+    }
+
+
+    public void ShootNextTurn()
+    {
+        SetNextAction(Shoot);
     }
 
 
     public override void MoveNPC()
     {
-        if (!alive)
+        if (!isAlive)
         {
             pastMovements.Add(transform.position);
             pastOrientations.Add(transform.localEulerAngles);
@@ -89,9 +139,9 @@ public class Enemy : NPC
         else if (turn != 0) nextMovementIndex = pastMovementIndexes[turn-1];
 
         // Check if enemy is alive
-        if (!alive && aliveTurns[turn]) Resurrect();
-        else if (alive && !aliveTurns[turn] && !knockedOutTurns[turn]) TakeDamage();
-        else if (alive && !aliveTurns[turn] && knockedOutTurns[turn]) KnockOut();
+        if (!isAlive && aliveTurns[turn]) Resurrect();
+        else if (isAlive && !aliveTurns[turn] && !knockedOutTurns[turn]) TakeDamage();
+        else if (isAlive && !aliveTurns[turn] && knockedOutTurns[turn]) KnockOut();
     }
 
 
@@ -100,8 +150,11 @@ public class Enemy : NPC
         base.EraseTurns(turn);
 
         aliveTurns.RemoveRange(turn + 1, aliveTurns.Count - turn - 1);
+        alertTurns.RemoveRange(turn + 1, alertTurns.Count - turn - 1);
         knockedOutTurns.RemoveRange(turn + 1, knockedOutTurns.Count - turn - 1);
         pastMovementIndexes.RemoveRange(turn, pastMovementIndexes.Count - turn);
+        
+        SetAlert(alertTurns[alertTurns.Count - 1]);
 
         if (turn > 0) nextMovementIndex = pastMovementIndexes[turn - 1] + 1;
         else nextMovementIndex = 0;
@@ -113,8 +166,8 @@ public class Enemy : NPC
         animator.enabled = true;
         animator.SetBool("Death", false);
         animator.SetBool("TaserKnockOut", false);
-        alive = true;
-        knockedOut = false;
+        isAlive = true;
+        isKnockedOut = false;
     }
 
 
@@ -136,13 +189,21 @@ public class Enemy : NPC
     protected override IEnumerator CShoot(AudioClip clip)
     {
         yield return StartCoroutine(base.CShoot(clip));
-        if (alive) Player.instance.SendMessage("TakeDamage");
+        if (isAlive && !isAlert) Player.instance.SendMessage("TakeDamage");
+        else if (isAlive && isAlert) hostage.SendMessage("TakeDamage");
     }
 
 
     protected override IEnumerator CTakeDamage()
     {
         yield return StartCoroutine(base.CTakeDamage());
+
+        // Kill hostage if enemy is killed by gun shot
+        if (enemyWithHostage != null && enemyWithHostage.isAlive)
+        {
+            enemyWithHostage.SetAlert();
+        }
+        
         GameManager.instance.AllEnemiesSecured();
         GameManager.instance.AllHostagesSaved();
     }
@@ -164,6 +225,10 @@ public class Enemy : NPC
     {
         pastMovementIndexes.Clear();
         nextMovementIndex = 0;
+
+        alertTurns.Clear();
+        isAlert = false;
+        alertTurns.Add(isAlert);
 
         base.ClearTurns();
     }

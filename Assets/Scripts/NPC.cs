@@ -33,8 +33,8 @@ public abstract class NPC : Character
     {
         bc2D.enabled = false;
 
-        alive = false;
-        knockedOut = true;
+        isAlive = false;
+        isKnockedOut = true;
         StartCoroutine(CTaserKnockOut());
     }
 

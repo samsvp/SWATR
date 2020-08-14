@@ -48,7 +48,7 @@ public class Hostage : NPC
         textMesh = transform.GetChild(0).GetChild(0).GetComponent<TextMesh>();
         outline = transform.GetChild(0).GetComponent<TextMesh>();
 
-        UpdateTurnsLeftGUI(maxTurnsLeft);
+        UpdateGUI(maxTurnsLeft);
     }
 
     // Update is called once per frame
@@ -76,11 +76,11 @@ public class Hostage : NPC
     {
         if (!isSaved) IsHostageSaved();
         if (--turnsLeft == -1 && !isSaved) KillHostage();
-        UpdateTurnsLeftGUI(turnsLeft);
+        UpdateGUI(turnsLeft);
     }
 
 
-    public void UpdateTurnsLeftGUI(int turn)
+    public void UpdateGUI(int turn)
     {
         if (isSaved)
         {
@@ -89,7 +89,7 @@ public class Hostage : NPC
             outline.text = "Saved!";
             return;
         }
-        if (turn >= 0)
+        if (turn >= 0 && isAlive)
         {
             var sTurn = turn.ToString();
             textMesh.text = sTurn;
@@ -105,19 +105,19 @@ public class Hostage : NPC
 
     public override void EraseTurns(int turn)
     {
-
         if (!isSaved) savedOnTurn = -1;
-        UpdateTurnsLeftGUI(maxTurnsLeft - turn);
+        UpdateGUI(maxTurnsLeft - turn);
     }
 
 
     public override void Rewind(int turn)
     {
         turnsLeft = maxTurnsLeft - turn;
-        UpdateTurnsLeftGUI(turnsLeft);
+        UpdateGUI(turnsLeft);
         
         if (isSaved)
         {
+            print("saved");
             if (savedOnTurn > turn) UnSaveHostage();
             return;
         }
@@ -141,7 +141,7 @@ public class Hostage : NPC
 
     public bool IsHostageSaved()
     {
-        if (enemies.Any(e => e.alive)) return false;
+        if (enemies.Any(e => e.isAlive) || isDead) return false;
         SaveHostage();
         return true;
     }
@@ -149,7 +149,7 @@ public class Hostage : NPC
 
     public void SaveHostage()
     {
-        if ((isDead && turnsLeft < -1) || isSaved) return;
+        if (isDead || isSaved) return;
 
         isSaved = true;
         isDead = false;
@@ -158,7 +158,7 @@ public class Hostage : NPC
         audioSource.Play();
 
         savedOnTurn = GameManager.instance.turns;
-        UpdateTurnsLeftGUI(savedOnTurn);
+        UpdateGUI(savedOnTurn);
     }
 
 
@@ -166,7 +166,7 @@ public class Hostage : NPC
     {
         render.sprite = captiveSprite;
         isSaved = false;
-        UpdateTurnsLeftGUI(maxTurnsLeft - GameManager.instance.turns);
+        UpdateGUI(maxTurnsLeft - GameManager.instance.turns);
     }
 
 
@@ -176,7 +176,7 @@ public class Hostage : NPC
         isSaved = false;
         isDead = false;
         savedOnTurn = -1;
-        UpdateTurnsLeftGUI(GameManager.instance.turns);
+        UpdateGUI(GameManager.instance.turns);
     }
 
 
@@ -193,6 +193,19 @@ public class Hostage : NPC
         render.sprite = deadSprite;
         isDead = true;
         isSaved = false;
+
+        UpdateGUI(GameManager.instance.turns);
+    }
+
+
+    public override void TakeDamage()
+    {
+        // Disable colliders (remember to reactivate it if it comes back to live
+        // through a rewind)
+        bc2D.enabled = false;
+
+        isAlive = false;
+        KillHostage();
     }
 
 
@@ -201,7 +214,7 @@ public class Hostage : NPC
         isDead = false;
 
         turnsLeft = maxTurnsLeft;
-        UpdateTurnsLeftGUI(maxTurnsLeft);
+        UpdateGUI(maxTurnsLeft);
         
         base.ClearTurns();
     }

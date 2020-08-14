@@ -165,14 +165,14 @@ public class GameManager : MonoBehaviour
 
     public void AllEnemiesSecured()
     {
-        allEnemiesSecured = NPCs.Where(NPC => NPC is Enemy).All(npc => !npc.alive);
+        allEnemiesSecured = NPCs.Where(NPC => NPC is Enemy).All(npc => !npc.isAlive);
         LevelCompleted();
     }
 
 
     private void LevelCompleted()
     {
-        if (SceneManager.GetActiveScene().name == "Level4" && !boss.alive)
+        if (SceneManager.GetActiveScene().name == "Level4" && !boss.isAlive)
         {
             levelCompletedGUI.SetActive(true);
 
@@ -198,7 +198,7 @@ public class GameManager : MonoBehaviour
         List<Enemy> enemies = NPCs.Where(npc => npc is Enemy).Cast<Enemy>().ToList();
         List<Hostage> hostages = NPCs.Where(npc => npc is Hostage).Cast<Hostage>().ToList();
 
-        int enemiesKnockedOut = enemies.Where(enemy => enemy.knockedOut).Count();
+        int enemiesKnockedOut = enemies.Where(enemy => enemy.isKnockedOut).Count();
         int score = (int)Mathf.Floor(enemiesKnockedOut / (float)enemies.Count * 50) + 50;
 
         var levelCompletedGUIText = levelCompletedGUI.transform.GetChild(0).gameObject.GetComponent<Text>();
@@ -213,8 +213,8 @@ public class GameManager : MonoBehaviour
     private void DisplayLvl4Score()
     {
         List<Enemy> enemies = NPCs.Where(npc => npc is Enemy).Cast<Enemy>().ToList();
-        int enemiesKnockedOut = enemies.Where(enemy => enemy.knockedOut).Count();
-        int enemiesKilled = enemies.Where(enemy => !enemy.knockedOut && !enemy.alive).Count();
+        int enemiesKnockedOut = enemies.Where(enemy => enemy.isKnockedOut).Count();
+        int enemiesKilled = enemies.Where(enemy => !enemy.isKnockedOut && !enemy.isAlive).Count();
         
         int score;
         if (enemiesKilled <= 3) score = 100;

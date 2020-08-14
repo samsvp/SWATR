@@ -37,7 +37,7 @@ public class NextFloor : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!canGoToNextRoom && enemies.All(e => !e.alive) && hostages.All(h => h.isSaved))
+        if (!canGoToNextRoom && enemies.All(e => !e.isAlive) && hostages.All(h => h.isSaved))
         {
             arrow.SetActive(true);
             bc2D.enabled = true;
