@@ -22,7 +22,10 @@ public class Enemy : NPC
     private Sprite knockedOutSprite;
 
     private Action nextAction;
-    private Transform nextMovementArrow;
+    private Transform nextActionTransform;
+    private SpriteRenderer nextActionRenderer;
+    [SerializeField]
+    private Sprite[] actionSprites;
 
     [SerializeField]
     protected AudioClip knockedOutClip;
@@ -32,14 +35,29 @@ public class Enemy : NPC
     {
         base.Start();
 
-        nextMovementArrow = transform.GetChild(0);
+        nextActionTransform = transform.GetChild(0);
+        nextActionRenderer = nextActionTransform.gameObject.GetComponent<SpriteRenderer>();
         SetNextAction(MoveNPC);
+
+        StartCoroutine(MoveNextActionTransform());
     }
 
     // Update is called once per frame
     protected override void Update()
     {
+        
+    }
 
+
+    private IEnumerator MoveNextActionTransform()
+    {
+        while (true)
+        {
+            float sin = 0.005f * Mathf.Sin(Time.time);
+            var offset = new Vector3(0, sin);
+            nextActionTransform.localPosition += offset;
+            yield return new WaitForFixedUpdate();
+        }
     }
 
 
@@ -67,11 +85,16 @@ public class Enemy : NPC
             int nextIndex = (nextMovementIndex) % movement.Count;
             Vector2 nextMovement = movement[nextIndex];
             Vector3 angles = GetDirectionAngles((int)nextMovement.x, (int)nextMovement.y);
-            nextMovementArrow.eulerAngles = angles;
+            nextActionTransform.eulerAngles = angles;
+
+            if (nextMovement == Vector2.zero) nextActionRenderer.sprite = actionSprites[4];
+            else nextActionRenderer.sprite = actionSprites[0];
+            
         }
         else if (action == Shoot)
         {
-            print("Shoot");
+            nextActionTransform.localEulerAngles = Vector3.zero;
+            nextActionRenderer.sprite = actionSprites[1];
         }
 
         nextAction = action;
@@ -203,7 +226,10 @@ public class Enemy : NPC
         {
             enemyWithHostage.SetAlert();
         }
-        
+
+        nextActionTransform.localEulerAngles = Vector3.zero;
+        nextActionRenderer.sprite = actionSprites[2];
+
         GameManager.instance.AllEnemiesSecured();
         GameManager.instance.AllHostagesSaved();
     }
@@ -215,7 +241,11 @@ public class Enemy : NPC
         audioSource.Play();
 
         yield return StartCoroutine(base.CTaserKnockOut());
+
         render.sprite = knockedOutSprite;
+        nextActionTransform.localEulerAngles = Vector3.zero;
+        nextActionRenderer.sprite = actionSprites[3];
+
         GameManager.instance.AllEnemiesSecured();
         GameManager.instance.AllHostagesSaved();
     }

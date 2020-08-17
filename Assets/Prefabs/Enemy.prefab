@@ -1566,8 +1566,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveTime: 0.2
   isPerformingAction: 0
-  alive: 1
-  knockedOut: 0
+  isAlive: 1
+  isKnockedOut: 0
   mDeadSprite: {fileID: 1445799458632272015, guid: 6d13d50771621d94f90b451e3cd78074,
     type: 3}
   shotgunClip: {fileID: 8300000, guid: fc454896c763bb5409279bc16b140b64, type: 3}
@@ -1583,8 +1583,16 @@ MonoBehaviour:
   - {x: 1, y: 0}
   - {x: 1, y: 0}
   - {x: 0, y: 1}
+  hostage: {fileID: 0}
+  enemyWithHostage: {fileID: 0}
   knockedOutSprite: {fileID: -2997628259224032760, guid: 6010d51f6ce4d4b42b6214d310e4129b,
     type: 3}
+  actionSprites:
+  - {fileID: -1801896071807941083, guid: db934ab5542d29946aaf71018e90959a, type: 3}
+  - {fileID: 4759841920154621262, guid: db934ab5542d29946aaf71018e90959a, type: 3}
+  - {fileID: 6667297981708123641, guid: db934ab5542d29946aaf71018e90959a, type: 3}
+  - {fileID: -7878206304970820324, guid: db934ab5542d29946aaf71018e90959a, type: 3}
+  - {fileID: 3328273680541641904, guid: db934ab5542d29946aaf71018e90959a, type: 3}
   knockedOutClip: {fileID: 8300000, guid: d9156722ab186174b9ab56808d7dc1b1, type: 3}
 --- !u!82 &99420999109450773
 AudioSource:

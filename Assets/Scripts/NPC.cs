@@ -11,7 +11,7 @@ public abstract class NPC : Character
 
     protected Vector3 initialPosition;
     protected Vector3 initialRotation;
-
+    
     // Use this for initialization
     protected override void Start()
     {
