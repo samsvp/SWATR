@@ -80,6 +80,9 @@ public class Player : Character
     
     public LayerMask highlightMask;
 
+    // Vision
+    private bool isVisionEnabled = true;
+
     // Other game objects
     [SerializeField]
     private GameObject grenade;
@@ -183,6 +186,7 @@ public class Player : Character
             gunSelected.SetActive(true);
             taserSelected.SetActive(false);
             grenadeSelected.SetActive(false);
+            if (!isVisionEnabled) EnableVision();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -194,6 +198,7 @@ public class Player : Character
             gunSelected.SetActive(false);
             taserSelected.SetActive(true);
             grenadeSelected.SetActive(false);
+            if (!isVisionEnabled) EnableVision();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
@@ -204,8 +209,27 @@ public class Player : Character
             gunSelected.SetActive(false);
             taserSelected.SetActive(false);
             grenadeSelected.SetActive(true);
+            if (isVisionEnabled) DisableVision();
             GrenadePosition();
         }
+    }
+
+
+    private void DisableVision()
+    {
+        for (int i = 1; i < transform.childCount; i++)
+            transform.GetChild(i).gameObject.SetActive(false);
+
+        isVisionEnabled = false;
+    }
+
+
+    private void EnableVision()
+    {
+        for (int i = 1; i < transform.childCount; i++)
+            transform.GetChild(i).gameObject.SetActive(true);
+
+        isVisionEnabled = true;
     }
 
 

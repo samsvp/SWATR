@@ -20,14 +20,14 @@ public class Vision : MonoBehaviour
     
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (nextChild != null) nextChild.gameObject.SetActive(false);
+        if (nextChild != null && !col.CompareTag("Vision")) nextChild.gameObject.SetActive(false);
         if (col.CompareTag("Player")) parent.SendMessage("ShootNextTurn");
     }
 
 
     void OnTriggerExit2D(Collider2D col)
     {
-        if (nextChild != null) nextChild.gameObject.SetActive(true);
+        if (nextChild != null && !col.CompareTag("Vision")) nextChild.gameObject.SetActive(true);
     }
 
 
