@@ -133,8 +133,13 @@ public class Character : MonoBehaviour
 
     public virtual void EraseTurns(int turn)
     {
-        pastMovements.RemoveRange(turn + 1, pastMovements.Count - turn - 1);
-        pastOrientations.RemoveRange(turn + 1, pastOrientations.Count - turn - 1);
+        try
+        {
+            pastMovements.RemoveRange(turn + 1, pastMovements.Count - turn - 1);
+            pastOrientations.RemoveRange(turn + 1, pastOrientations.Count - turn - 1);
+        }
+        catch { print("error"); }
+        
     }
 
 

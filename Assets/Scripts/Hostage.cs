@@ -6,11 +6,10 @@ using UnityEngine;
 
 public class Hostage : NPC
 {
-    // Turns left until the hostage is killed
-    private int turnsLeft;
-    public int maxTurnsLeft = 8;
+    public LayerMask highlightMask;
 
     private int savedOnTurn = -1;
+    private int killedOnTurn = -1;
 
     [HideInInspector]
     public bool isDead = false;
@@ -41,14 +40,11 @@ public class Hostage : NPC
         base.Start();
 
         isPerformingAction = false;
-        turnsLeft = maxTurnsLeft;
 
         captiveSprite = render.sprite;
 
         textMesh = transform.GetChild(0).GetChild(0).GetComponent<TextMesh>();
         outline = transform.GetChild(0).GetComponent<TextMesh>();
-
-        UpdateGUI(maxTurnsLeft);
     }
 
     // Update is called once per frame
@@ -57,10 +53,6 @@ public class Hostage : NPC
         
     }
 
-    void LateUpdate()
-    {
-        if (turnsLeft == -1) IsHostageSaved();
-    }
 
     public override void ChooseAction()
     {
@@ -75,25 +67,21 @@ public class Hostage : NPC
     public override void MoveNPC()
     {
         if (!isSaved) IsHostageSaved();
-        if (--turnsLeft == -1 && !isSaved) KillHostage();
-        UpdateGUI(turnsLeft);
     }
 
 
-    public void UpdateGUI(int turn)
+    public void UpdateGUI()
     {
         if (isSaved)
         {
             render.sprite = savedSprite;
             textMesh.text = "Saved!";
             outline.text = "Saved!";
-            return;
         }
-        if (turn >= 0 && isAlive)
+        if (isAlive)
         {
-            var sTurn = turn.ToString();
-            textMesh.text = sTurn;
-            outline.text = sTurn;
+            textMesh.text = "Help!";
+            outline.text = "Help!";
         }
         else
         {
@@ -106,36 +94,25 @@ public class Hostage : NPC
     public override void EraseTurns(int turn)
     {
         if (!isSaved) savedOnTurn = -1;
-        UpdateGUI(maxTurnsLeft - turn);
+        else if (isAlive) killedOnTurn = -1;
+        UpdateGUI();
     }
 
 
     public override void Rewind(int turn)
     {
-        turnsLeft = maxTurnsLeft - turn;
-        UpdateGUI(turnsLeft);
-        
-        if (isSaved)
-        {
-            print("saved");
-            if (savedOnTurn > turn) UnSaveHostage();
-            return;
-        }
-        else if (savedOnTurn == turn)
-        {
-            SaveHostage();
-            return;
-        }
+        if (isSaved) { if (savedOnTurn > turn) UnSaveHostage(); }
+        if (savedOnTurn == turn) SaveHostage();
+        else if (killedOnTurn <= turn) KillHostage();
+        else if (killedOnTurn > turn) ResurrectHostage();
 
-        if (turnsLeft == -1) KillHostage();
-        else if (turnsLeft == 0) ResurrectHostage();
+        UpdateGUI();
     }
 
 
     public void ResetTurn(int turn)
     {
-        turnsLeft = maxTurnsLeft - turn;
-        if (turnsLeft == -1 && !isSaved) KillHostage();
+        if (!isSaved) KillHostage();
     }
 
 
@@ -158,7 +135,7 @@ public class Hostage : NPC
         audioSource.Play();
 
         savedOnTurn = GameManager.instance.turns;
-        UpdateGUI(savedOnTurn);
+        UpdateGUI();
     }
 
 
@@ -166,17 +143,18 @@ public class Hostage : NPC
     {
         render.sprite = captiveSprite;
         isSaved = false;
-        UpdateGUI(maxTurnsLeft - GameManager.instance.turns);
+        UpdateGUI();
     }
 
 
     public void EraseSave()
     {
+        print("hello");
         render.sprite = captiveSprite;
         isSaved = false;
         isDead = false;
         savedOnTurn = -1;
-        UpdateGUI(GameManager.instance.turns);
+        UpdateGUI();
     }
 
 
@@ -185,37 +163,54 @@ public class Hostage : NPC
         render.sprite = captiveSprite;
         isDead = false;
         isSaved = false;
+        isAlive = true;
+
+        // This fixes on collision enter bugs
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up,
+            0.1f, highlightMask);
+        if (hit.transform != null)
+            hit.transform.SendMessage("OnDisable", SendMessageOptions.DontRequireReceiver);
+
+        bc2D.enabled = true;
+
     }
 
 
     public void KillHostage()
     {
+        if (isDead) return;
+
         render.sprite = deadSprite;
         isDead = true;
         isSaved = false;
+        isAlive = false;
+        bc2D.enabled = false;
 
-        UpdateGUI(GameManager.instance.turns);
+        killedOnTurn = GameManager.instance.turns;
+
+        // This fixes on collision enter bugs
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up,
+            0.1f, highlightMask);
+        if (hit.transform != null)
+            hit.transform.SendMessage("OnEnable", SendMessageOptions.DontRequireReceiver);
+
+        UpdateGUI();
     }
 
 
     public override void TakeDamage()
     {
-        // Disable colliders (remember to reactivate it if it comes back to live
-        // through a rewind)
-        bc2D.enabled = false;
-
-        isAlive = false;
         KillHostage();
     }
 
-
+    
     public override void ClearTurns()
     {
         isDead = false;
-
-        turnsLeft = maxTurnsLeft;
-        UpdateGUI(maxTurnsLeft);
+        
+        UpdateGUI();
         
         base.ClearTurns();
     }
+    
 }

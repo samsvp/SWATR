@@ -16,7 +16,6 @@ public class Enemy : NPC
     private Enemy enemyWithHostage;
 
     private bool isAlert = false;
-    private List<bool> alertTurns = new List<bool>() { false };
 
     [SerializeField]
     private Sprite knockedOutSprite;
@@ -64,7 +63,6 @@ public class Enemy : NPC
     public override void ChooseAction()
     {
         aliveTurns.Add(isAlive);
-        alertTurns.Add(isAlert);
         knockedOutTurns.Add(isKnockedOut);
 
         if (!render.isVisible || !isAlive)
@@ -103,12 +101,9 @@ public class Enemy : NPC
 
     public void SetAlert(bool alert=true)
     {
-        isAlert = alert;
+        if (hostage.isDead) return;
 
-        // Add the alert turn so that if the player rewind back to when an enemy is killed
-        // the last element of alertTurns is true
-        alertTurns.RemoveAt(0);
-        alertTurns.Add(isAlert);
+        isAlert = alert;
 
         if (isAlert) SetNextAction(Shoot);
         else SetNextAction(MoveNPC);
@@ -153,7 +148,6 @@ public class Enemy : NPC
         }
         else
         {
-            Rewind(turn - 1);
             return;
         }
 
@@ -165,6 +159,9 @@ public class Enemy : NPC
         if (!isAlive && aliveTurns[turn]) Resurrect();
         else if (isAlive && !aliveTurns[turn] && !knockedOutTurns[turn]) TakeDamage();
         else if (isAlive && !aliveTurns[turn] && knockedOutTurns[turn]) KnockOut();
+
+        if (isAlive) SetNextAction(MoveNPC);
+        else if (aliveTurns[turn - 1] && enemyWithHostage != null) enemyWithHostage.SetAlert();
     }
 
 
@@ -173,14 +170,15 @@ public class Enemy : NPC
         base.EraseTurns(turn);
 
         aliveTurns.RemoveRange(turn + 1, aliveTurns.Count - turn - 1);
-        alertTurns.RemoveRange(turn + 1, alertTurns.Count - turn - 1);
         knockedOutTurns.RemoveRange(turn + 1, knockedOutTurns.Count - turn - 1);
-        pastMovementIndexes.RemoveRange(turn, pastMovementIndexes.Count - turn);
-        
-        SetAlert(alertTurns[alertTurns.Count - 1]);
+        try
+        {
+            pastMovementIndexes.RemoveRange(turn, pastMovementIndexes.Count - turn);
 
-        if (turn > 0) nextMovementIndex = pastMovementIndexes[turn - 1] + 1;
-        else nextMovementIndex = 0;
+            if (turn > 0) nextMovementIndex = pastMovementIndexes[turn - 1] + 1;
+            else nextMovementIndex = 0;
+        }
+        catch { print("error enemy"); }
     }
 
 
@@ -255,10 +253,8 @@ public class Enemy : NPC
     {
         pastMovementIndexes.Clear();
         nextMovementIndex = 0;
-
-        alertTurns.Clear();
+        
         isAlert = false;
-        alertTurns.Add(isAlert);
 
         base.ClearTurns();
     }

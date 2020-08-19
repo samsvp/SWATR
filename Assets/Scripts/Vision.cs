@@ -17,7 +17,7 @@ public class Vision : MonoBehaviour
         if (index < parent.childCount - 1) nextChild = parent.GetChild(index + 1);
     }
     
-    
+
     void OnTriggerEnter2D(Collider2D col)
     {
         if (nextChild != null && !col.CompareTag("Vision")) nextChild.gameObject.SetActive(false);

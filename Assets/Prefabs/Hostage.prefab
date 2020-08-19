@@ -81,7 +81,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2985456818449175008}
-  m_Text: 0
+  m_Text: Help!
   m_OffsetZ: 0
   m_CharacterSize: 0.05
   m_LineSpacing: 1
@@ -178,7 +178,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2985456819011324293}
-  m_Text: 0
+  m_Text: Help!
   m_OffsetZ: 0
   m_CharacterSize: 0.06
   m_LineSpacing: 1
@@ -306,12 +306,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveTime: 0.03
   isPerformingAction: 0
-  alive: 1
-  knockedOut: 0
+  isAlive: 1
+  isKnockedOut: 0
   mDeadSprite: {fileID: 0}
   shotgunClip: {fileID: 0}
   deathClip: {fileID: 8300000, guid: 04363ba8b626c5748b94d7f8cbef8c22, type: 3}
-  maxTurnsLeft: 8
+  highlightMask:
+    serializedVersion: 2
+    m_Bits: 4
   isDead: 0
   isSaved: 0
   enemies:
