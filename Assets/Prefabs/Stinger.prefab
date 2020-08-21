@@ -10,11 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9181571440762596579}
   - component: {fileID: 5751550368119613520}
-  - component: {fileID: -9015998233036162051}
-  - component: {fileID: 2612534877618979771}
-  - component: {fileID: 8726316580654173293}
+  - component: {fileID: 5652727672429889256}
   m_Layer: 2
-  m_Name: Landmine
+  m_Name: Stinger
   m_TagString: VisionIgnore
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -6016389371887216863, guid: db934ab5542d29946aaf71018e90959a,
+  m_Sprite: {fileID: -8785247882205639320, guid: db934ab5542d29946aaf71018e90959a,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -86,54 +84,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &-9015998233036162051
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4659043951440811489}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!61 &2612534877618979771
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4659043951440811489}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.8, y: 0.8}
-  m_EdgeRadius: 0
---- !u!114 &8726316580654173293
+--- !u!114 &5652727672429889256
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,9 +93,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4659043951440811489}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83132c2d0389d6a4ea110820bee2c72d, type: 3}
+  m_Script: {fileID: 11500000, guid: f87fd5b0fe960754b9e17a477debc200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 2
-  mineExplosion: {fileID: 4829283996313437432, guid: ced430ceb7092ec4aaf46c8c6f65c429,
+  radius: 1
+  stingerExplosion: {fileID: 4829283996313437432, guid: bc49d4a2dec7f15478f064f401b2b1e7,
     type: 3}

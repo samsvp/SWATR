@@ -10,6 +10,7 @@ TagManager:
   - LevelCompleted
   - Boss
   - Vision
+  - VisionIgnore
   layers:
   - Default
   - TransparentFX

@@ -40,13 +40,7 @@ public class GameManager : MonoBehaviour
     public bool grenadeSet = false;
     [HideInInspector]
     public int grenadeCountdown;
-
-    // Landmine Manager
-    [HideInInspector]
-    public bool landmineSet = false;
-    [HideInInspector]
-    public int landmineCountdown;
-
+    
     // Checks for level completion
     private bool allHostagesSaved = false;
     private bool allEnemiesSecured = false;
@@ -119,7 +113,6 @@ public class GameManager : MonoBehaviour
     private IEnumerator ChooseNPCsAction()
     {
         if (grenadeSet) grenadeCountdown--;
-        if (landmineSet) landmineCountdown--;
 
         turnsText.text = (++turns).ToString();
 
@@ -135,8 +128,10 @@ public class GameManager : MonoBehaviour
         
         NPCsMoving = false;
         playersTurn = true;
-        // Wait one frame due a bug when entering doors
+
+        // Wait a for fixed update to check collision
         wait = true;
+        yield return new WaitForFixedUpdate();
         wait = false;
     }
 

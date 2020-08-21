@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 87365628802242499}
   - component: {fileID: 5963703961177985226}
   m_Layer: 2
-  m_Name: Explosion
+  m_Name: StingerExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,7 +97,7 @@ Animator:
   m_GameObject: {fileID: 4829283996313437432}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8f846e1cd9a81254fb35deaf696af214, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8a27964857288f24881057a145a74966, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -114,7 +114,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4829283996313437432}
-  m_BodyType: 1
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageFunctionName: 
-  explosionClip: {fileID: 8300000, guid: 34216d0ae7330d14f80ea2a9e3ef97f9, type: 3}
+  explosionClip: {fileID: 8300000, guid: 0b79c478a6b9d7740a5082886003798f, type: 3}
 --- !u!82 &5963703961177985226
 AudioSource:
   m_ObjectHideFlags: 0
@@ -179,8 +179,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 3
+  m_Volume: 0.5
+  m_Pitch: 0.5
   Loop: 0
   Mute: 0
   Spatialize: 0

@@ -41,6 +41,10 @@ public class Player : Character
     private int landmineAmmo = 3;
     [SerializeField]
     private Text landmineAmmoText;
+    [SerializeField]
+    private int stingerAmmo = 3;
+    [SerializeField]
+    private Text stingerAmmoText;
 
     // Turn button
     public GameObject turnButton;
@@ -65,6 +69,8 @@ public class Player : Character
     private Sprite grenadeSprite;
     [SerializeField]
     private Sprite landmineSprite;
+    [SerializeField]
+    private Sprite stingerSprite;
 
     // Weapon Logic
     public enum Weapon
@@ -72,10 +78,15 @@ public class Player : Character
         gun,
         taser,
         grenade,
-        landmine
+        landmine,
+        stinger
     };
 
     private Weapon weapon = Weapon.gun;
+
+    // Stinger Logic
+    private Stinger mstinger = null;
+    private bool isStingerSet = false;
 
     // Weapon Select
     [SerializeField]
@@ -86,7 +97,9 @@ public class Player : Character
     private GameObject grenadeSelected;
     [SerializeField]
     private GameObject landmineSelected;
-    
+    [SerializeField]
+    private GameObject stingerSelected;
+
     public LayerMask highlightMask;
 
     // Vision
@@ -97,7 +110,12 @@ public class Player : Character
     private GameObject grenade;
     [SerializeField]
     private GameObject landmine;
+    [SerializeField]
+    private GameObject stinger;
+
+    // Highlight
     private GameObject highlight;
+    private int highlightDistance = 6;
 
     // Audio
     [SerializeField]
@@ -175,6 +193,9 @@ public class Player : Character
                 case Weapon.landmine:
                     ShootLandmine();
                     break;
+                case Weapon.stinger:
+                    ShootStinger();
+                    break;
                 default:
                     break;
             }
@@ -197,11 +218,13 @@ public class Player : Character
             animator.SetBool("Taser", false);
             animator.SetBool("Grenade", false);
             animator.SetBool("Landmine", false);
+            animator.SetBool("Stinger", false);
             highlight.SetActive(false);
             gunSelected.SetActive(true);
             taserSelected.SetActive(false);
             grenadeSelected.SetActive(false);
             landmineSelected.SetActive(false);
+            stingerSelected.SetActive(false);
             if (!isVisionEnabled) EnableVision();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -211,11 +234,13 @@ public class Player : Character
             animator.SetBool("Taser", true);
             animator.SetBool("Grenade", false);
             animator.SetBool("Landmine", false);
+            animator.SetBool("Stinger", false);
             highlight.SetActive(false);
             gunSelected.SetActive(false);
             taserSelected.SetActive(true);
             grenadeSelected.SetActive(false);
             landmineSelected.SetActive(false);
+            stingerSelected.SetActive(false);
             if (!isVisionEnabled) EnableVision();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
@@ -225,10 +250,12 @@ public class Player : Character
             animator.SetBool("Taser", false);
             animator.SetBool("Grenade", true);
             animator.SetBool("Landmine", false);
+            animator.SetBool("Stinger", false);
             gunSelected.SetActive(false);
             taserSelected.SetActive(false);
             grenadeSelected.SetActive(true);
             landmineSelected.SetActive(false);
+            stingerSelected.SetActive(false);
             if (isVisionEnabled) DisableVision();
             GrenadePosition();
         }
@@ -239,12 +266,30 @@ public class Player : Character
             animator.SetBool("Taser", false);
             animator.SetBool("Grenade", false);
             animator.SetBool("Landmine", true);
+            animator.SetBool("Stinger", false);
             gunSelected.SetActive(false);
             taserSelected.SetActive(false);
             grenadeSelected.SetActive(false);
             landmineSelected.SetActive(true);
+            stingerSelected.SetActive(false);
             if (isVisionEnabled) DisableVision();
             LandminePosition();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            weapon = Weapon.stinger;
+            sprite = landmineSprite;
+            animator.SetBool("Taser", false);
+            animator.SetBool("Grenade", false);
+            animator.SetBool("Landmine", false);
+            animator.SetBool("Stinger", true);
+            gunSelected.SetActive(false);
+            taserSelected.SetActive(false);
+            grenadeSelected.SetActive(false);
+            landmineSelected.SetActive(false);
+            stingerSelected.SetActive(true);
+            if (isVisionEnabled) DisableVision();
+            StingerPosition();
         }
     }
 
@@ -274,6 +319,7 @@ public class Player : Character
             highlight.SetActive(false);
             return;
         }
+        highlightDistance = 6;
         highlight.SetActive(true);
         HighlightPosition();
     }
@@ -286,6 +332,20 @@ public class Player : Character
             highlight.SetActive(false);
             return;
         }
+        highlightDistance = 6;
+        highlight.SetActive(true);
+        HighlightPosition();
+    }
+
+
+    private void StingerPosition()
+    {
+        if (stingerAmmo <= 0)
+        {
+            highlight.SetActive(false);
+            return;
+        }
+        highlightDistance = 4;
         highlight.SetActive(true);
         HighlightPosition();
     }
@@ -294,7 +354,7 @@ public class Player : Character
     public void HighlightPosition()
     {
         bc2D.enabled = false;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, 6,
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, highlightDistance,
             highlightMask, -Mathf.Infinity, Mathf.Infinity);
         bc2D.enabled = true;             
         
@@ -305,22 +365,20 @@ public class Player : Character
         {
             if (Mathf.Abs(hit.point.x - transform.position.x) < tol)
             {
-                int hitY = (int)hit.point.y;
-                int offset = hit.point.y > transform.position.y ? -1 : 1;
-                int y = hitY % 2 == 1 ? hitY + offset : hitY + 2 * offset;
-                if (hit.point.y - y > 2) y += 2;
-                highlight.transform.position = new Vector3(transform.position.x, y);
+                int hitY = (int)hit.point.y - (int)transform.position.y;
+                hitY = Mathf.Abs(hitY);
+                if (hitY % 2 == 1) hitY++;
+                highlight.transform.localPosition = new Vector3(0, hitY);
             }
             else if (Mathf.Abs(hit.point.y - transform.position.y) < tol)
             {
-                int hitX = (int)hit.point.x;
-                int offset = hit.point.x > transform.position.x ? -1 : 1;
-                int x = hitX % 2 == 1 ? hitX + offset : hitX + 2 * offset;
-                if (hit.point.x - x > 2) x += 2;
-                highlight.transform.position = new Vector3(x, transform.position.y);
+                int hitX = (int)hit.point.x - (int)transform.position.x;
+                hitX = Mathf.Abs(hitX);
+                if (hitX % 2 == 1) hitX++;
+                highlight.transform.localPosition = new Vector3(0, hitX);
             }
         }
-        else highlight.transform.localPosition = new Vector3(0, 6);
+        else highlight.transform.localPosition = new Vector3(0, highlightDistance);
     }
 
 
@@ -461,11 +519,6 @@ public class Player : Character
 
     private IEnumerator ShootTaser(RaycastHit2D hit)
     {
-        // Make the taser transition
-        animator.enabled = true;
-        animator.SetBool("Taser", true);
-        animator.SetBool("Grenade", false);
-        animator.SetBool("Landmine", false);
         // Wait a frame for the transition to take place
         yield return null;
 
@@ -493,11 +546,6 @@ public class Player : Character
 
     private IEnumerator CShootGrenade()
     {
-        // Make the taser transition
-        animator.enabled = true;
-        animator.SetBool("Taser", false);
-        animator.SetBool("Grenade", true);
-        animator.SetBool("Landmine", false);
         // Wait a frame for the transition to take place
         yield return null;
 
@@ -527,11 +575,6 @@ public class Player : Character
 
     private IEnumerator CShootLandmine()
     {
-        // Make the taser transition
-        animator.enabled = true;
-        animator.SetBool("Taser", false);
-        animator.SetBool("Grenade", false);
-        animator.SetBool("Landmine", true);
         // Wait a frame for the transition to take place
         yield return null;
 
@@ -544,6 +587,44 @@ public class Player : Character
         // Spawn Grenade
         Instantiate(landmine, highlight.transform.position, Quaternion.identity);
         if (landmineAmmo <= 0) highlight.SetActive(false);
+    }
+
+
+    public void ShootStinger()
+    {
+        if (!isStingerSet)
+        {
+            if (stingerAmmo < 0) return; // Avoid negative numbers
+            if (stingerAmmo-- == 0) return;
+            isStingerSet = true;
+            stingerAmmoText.text = stingerAmmo.ToString();
+            BreakWindow();
+            StartCoroutine(CShootStinger());
+        }
+        else
+        {
+            isStingerSet = false;
+            mstinger.Detonate();
+            mstinger = null;
+        }
+    }
+
+
+    private IEnumerator CShootStinger()
+    {
+        // Wait a frame for the transition to take place
+        yield return null;
+
+        isPerformingAction = true;
+        yield return StartCoroutine(CShoot(grenadeClip));
+
+        pastMovements.Add(transform.position);
+        pastOrientations.Add(transform.localEulerAngles);
+
+        // Spawn Grenade
+        mstinger = Instantiate(stinger, highlight.transform.position, Quaternion.identity).
+            GetComponent<Stinger>();
+        if (stingerAmmo <= 0) highlight.SetActive(false);
     }
 
     #endregion shoot

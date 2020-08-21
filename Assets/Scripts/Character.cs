@@ -78,6 +78,7 @@ public class Character : MonoBehaviour
             pastOrientations.Add(transform.localEulerAngles);
             return true;
         }
+
         Vector2 start = transform.position;
         Vector2 end = start + 2 * new Vector2(xDir, yDir);
 
@@ -86,11 +87,11 @@ public class Character : MonoBehaviour
         RaycastHit2D hit = Physics2D.Linecast(start, end);
         bc2D.enabled = true;
 
+        // Change transform rotation
+        transform.localEulerAngles = GetDirectionAngles(xDir, yDir);
+
         if (hit.transform == null)
         {
-            // Change transform rotation
-            transform.localEulerAngles = GetDirectionAngles(xDir, yDir);
-
             StartCoroutine(SmoothMovement(end));
             // Add to the list of past movements
             pastMovements.Add(end);

@@ -2,38 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Landmine : MonoBehaviour
+public class Stinger : MonoBehaviour
 {
 
     [SerializeField]
     private int radius = 1;
     [SerializeField]
-    private GameObject mineExplosion;
-    
+    private GameObject stingerExplosion;
+
 
     public void Detonate()
     {
-        int n = 2 * radius + 1;
-        
         for (int x = -radius; x <= radius; x++)
         {
             for (int y = -radius; y <= radius; y++)
             {
-                if (Mathf.Abs(x) == Mathf.Abs(y))
+                if (x == 0 || y == 0)
                 {
                     var mExplosion =
-                        Instantiate(mineExplosion, transform.position + 2 * new Vector3(x, y), Quaternion.identity).
+                        Instantiate(stingerExplosion, transform.position + 2 * new Vector3(x, y), Quaternion.identity).
                         GetComponent<Explosion>();
-                    mExplosion.damageFunctionName = "TakeDamage";
+                    mExplosion.damageFunctionName = "KnockOut";
                 }
             }
         }
         Destroy(gameObject);
-    }
-
-
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (!col.CompareTag("Vision") && !col.CompareTag("VisionIgnore")) Detonate();
     }
 }

@@ -2831,6 +2831,42 @@ PrefabInstance:
       objectReference: {fileID: 1058485284}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ada03972e28e800428ef410534340d6d, type: 3}
+--- !u!114 &3806443697819097989 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5619968848709712540, guid: ada03972e28e800428ef410534340d6d,
+    type: 3}
+  m_PrefabInstance: {fileID: 3806443697819097988}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &3806443697819097990 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 26897525424965462, guid: ada03972e28e800428ef410534340d6d,
+    type: 3}
+  m_PrefabInstance: {fileID: 3806443697819097988}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3806443697819097991 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2716699691652808704, guid: ada03972e28e800428ef410534340d6d,
+    type: 3}
+  m_PrefabInstance: {fileID: 3806443697819097988}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &3806443697819097992 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 489102987802294235, guid: ada03972e28e800428ef410534340d6d,
+    type: 3}
+  m_PrefabInstance: {fileID: 3806443697819097988}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4109599079212211923
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2994,6 +3030,16 @@ PrefabInstance:
       objectReference: {fileID: 1295413545}
     - target: {fileID: 5076543942689869613, guid: ccab743cd2162a249983284e4d62e15b,
         type: 3}
+      propertyPath: landmineAmmoText
+      value: 
+      objectReference: {fileID: 3806443697819097989}
+    - target: {fileID: 5076543942689869613, guid: ccab743cd2162a249983284e4d62e15b,
+        type: 3}
+      propertyPath: stingerAmmoText
+      value: 
+      objectReference: {fileID: 3806443697819097991}
+    - target: {fileID: 5076543942689869613, guid: ccab743cd2162a249983284e4d62e15b,
+        type: 3}
       propertyPath: turnButton
       value: 
       objectReference: {fileID: 623706623}
@@ -3022,6 +3068,16 @@ PrefabInstance:
       propertyPath: grenadeSelected
       value: 
       objectReference: {fileID: 152035491}
+    - target: {fileID: 5076543942689869613, guid: ccab743cd2162a249983284e4d62e15b,
+        type: 3}
+      propertyPath: landmineSelected
+      value: 
+      objectReference: {fileID: 3806443697819097990}
+    - target: {fileID: 5076543942689869613, guid: ccab743cd2162a249983284e4d62e15b,
+        type: 3}
+      propertyPath: stingerSelected
+      value: 
+      objectReference: {fileID: 3806443697819097992}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccab743cd2162a249983284e4d62e15b, type: 3}
 --- !u!1001 &5870353713255245232
