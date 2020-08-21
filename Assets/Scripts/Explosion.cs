@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
+    [HideInInspector]
+    public string damageFunctionName;
 
     private AudioSource audioSource;
     [SerializeField]
@@ -30,6 +32,6 @@ public class Explosion : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        col.transform.SendMessage("TaserKnockOut", SendMessageOptions.DontRequireReceiver);
+        col.transform.SendMessage(damageFunctionName, SendMessageOptions.DontRequireReceiver);
     }
 }

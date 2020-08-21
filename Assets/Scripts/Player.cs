@@ -37,6 +37,10 @@ public class Player : Character
     private int grenadeAmmo = 3;
     [SerializeField]
     private Text grenadeAmmoText;
+    [SerializeField]
+    private int landmineAmmo = 3;
+    [SerializeField]
+    private Text landmineAmmoText;
 
     // Turn button
     public GameObject turnButton;
@@ -59,13 +63,16 @@ public class Player : Character
     private Sprite taserSprite;
     [SerializeField]
     private Sprite grenadeSprite;
+    [SerializeField]
+    private Sprite landmineSprite;
 
     // Weapon Logic
     public enum Weapon
     {
         gun,
         taser,
-        grenade
+        grenade,
+        landmine
     };
 
     private Weapon weapon = Weapon.gun;
@@ -77,6 +84,8 @@ public class Player : Character
     private GameObject taserSelected;
     [SerializeField]
     private GameObject grenadeSelected;
+    [SerializeField]
+    private GameObject landmineSelected;
     
     public LayerMask highlightMask;
 
@@ -86,6 +95,8 @@ public class Player : Character
     // Other game objects
     [SerializeField]
     private GameObject grenade;
+    [SerializeField]
+    private GameObject landmine;
     private GameObject highlight;
 
     // Audio
@@ -161,6 +172,9 @@ public class Player : Character
                 case Weapon.grenade:
                     ShootGrenade();
                     break;
+                case Weapon.landmine:
+                    ShootLandmine();
+                    break;
                 default:
                     break;
             }
@@ -182,10 +196,12 @@ public class Player : Character
             sprite = gunSprite;
             animator.SetBool("Taser", false);
             animator.SetBool("Grenade", false);
+            animator.SetBool("Landmine", false);
             highlight.SetActive(false);
             gunSelected.SetActive(true);
             taserSelected.SetActive(false);
             grenadeSelected.SetActive(false);
+            landmineSelected.SetActive(false);
             if (!isVisionEnabled) EnableVision();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -194,10 +210,12 @@ public class Player : Character
             sprite = taserSprite;
             animator.SetBool("Taser", true);
             animator.SetBool("Grenade", false);
+            animator.SetBool("Landmine", false);
             highlight.SetActive(false);
             gunSelected.SetActive(false);
             taserSelected.SetActive(true);
             grenadeSelected.SetActive(false);
+            landmineSelected.SetActive(false);
             if (!isVisionEnabled) EnableVision();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
@@ -206,11 +224,27 @@ public class Player : Character
             sprite = grenadeSprite;
             animator.SetBool("Taser", false);
             animator.SetBool("Grenade", true);
+            animator.SetBool("Landmine", false);
             gunSelected.SetActive(false);
             taserSelected.SetActive(false);
             grenadeSelected.SetActive(true);
+            landmineSelected.SetActive(false);
             if (isVisionEnabled) DisableVision();
             GrenadePosition();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            weapon = Weapon.landmine;
+            sprite = landmineSprite;
+            animator.SetBool("Taser", false);
+            animator.SetBool("Grenade", false);
+            animator.SetBool("Landmine", true);
+            gunSelected.SetActive(false);
+            taserSelected.SetActive(false);
+            grenadeSelected.SetActive(false);
+            landmineSelected.SetActive(true);
+            if (isVisionEnabled) DisableVision();
+            LandminePosition();
         }
     }
 
@@ -236,6 +270,18 @@ public class Player : Character
     private void GrenadePosition()
     {
         if (grenadeAmmo <= 0)
+        {
+            highlight.SetActive(false);
+            return;
+        }
+        highlight.SetActive(true);
+        HighlightPosition();
+    }
+
+
+    private void LandminePosition()
+    {
+        if (landmineAmmo <= 0)
         {
             highlight.SetActive(false);
             return;
@@ -419,6 +465,7 @@ public class Player : Character
         animator.enabled = true;
         animator.SetBool("Taser", true);
         animator.SetBool("Grenade", false);
+        animator.SetBool("Landmine", false);
         // Wait a frame for the transition to take place
         yield return null;
 
@@ -450,6 +497,7 @@ public class Player : Character
         animator.enabled = true;
         animator.SetBool("Taser", false);
         animator.SetBool("Grenade", true);
+        animator.SetBool("Landmine", false);
         // Wait a frame for the transition to take place
         yield return null;
 
@@ -463,7 +511,41 @@ public class Player : Character
         Instantiate(grenade, highlight.transform.position, Quaternion.identity);
         if (grenadeAmmo <= 0) highlight.SetActive(false);
     }
-    
+
+
+    public void ShootLandmine()
+    {
+        if (landmineAmmo < 0) return; // Avoid negative numbers
+        if (landmineAmmo-- == 0) return;
+        landmineAmmoText.text = landmineAmmo.ToString();
+
+        BreakWindow();
+
+        StartCoroutine(CShootLandmine());
+    }
+
+
+    private IEnumerator CShootLandmine()
+    {
+        // Make the taser transition
+        animator.enabled = true;
+        animator.SetBool("Taser", false);
+        animator.SetBool("Grenade", false);
+        animator.SetBool("Landmine", true);
+        // Wait a frame for the transition to take place
+        yield return null;
+
+        isPerformingAction = true;
+        yield return StartCoroutine(CShoot(grenadeClip));
+
+        pastMovements.Add(transform.position);
+        pastOrientations.Add(transform.localEulerAngles);
+
+        // Spawn Grenade
+        Instantiate(landmine, highlight.transform.position, Quaternion.identity);
+        if (landmineAmmo <= 0) highlight.SetActive(false);
+    }
+
     #endregion shoot
 
 

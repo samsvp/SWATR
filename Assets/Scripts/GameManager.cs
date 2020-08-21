@@ -41,6 +41,12 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public int grenadeCountdown;
 
+    // Landmine Manager
+    [HideInInspector]
+    public bool landmineSet = false;
+    [HideInInspector]
+    public int landmineCountdown;
+
     // Checks for level completion
     private bool allHostagesSaved = false;
     private bool allEnemiesSecured = false;
@@ -113,6 +119,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator ChooseNPCsAction()
     {
         if (grenadeSet) grenadeCountdown--;
+        if (landmineSet) landmineCountdown--;
 
         turnsText.text = (++turns).ToString();
 

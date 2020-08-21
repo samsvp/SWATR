@@ -37,10 +37,15 @@ public class Grenade : MonoBehaviour
     public void Detonate()
     {
         int n = 2 * radius + 1;
-        
+
         for (int x = -radius; x <= radius; x++)
             for (int y = -radius; y <= radius; y++)
-                Instantiate(explosion, transform.position + 2 * new Vector3(x, y), Quaternion.identity);
+            {
+                var mExplosion = 
+                    Instantiate(explosion, transform.position + 2 * new Vector3(x, y), Quaternion.identity).
+                    GetComponent<Explosion>();
+                mExplosion.damageFunctionName = "TaserKnockOut";
+            }
 
         Destroy(gameObject);
     }
